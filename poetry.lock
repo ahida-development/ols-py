@@ -990,6 +990,25 @@ rich = ">=10.14.0"
 toml = ">=0.10.2"
 
 [[package]]
+name = "types-requests"
+version = "2.28.10"
+description = "Typing stubs for requests"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+types-urllib3 = "<1.27"
+
+[[package]]
+name = "types-urllib3"
+version = "1.26.24"
+description = "Typing stubs for urllib3"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.3.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -1061,7 +1080,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.1, <4.0"
-content-hash = "5b1085239328b1d1ee2255b8f7c6d2967701941714d4503499b443f61a6aada1"
+content-hash = "5ce850fb491590e77c2f82d2e2a475dbba151627149591d4ae381b9ded8001a0"
 
 [metadata.files]
 attrs = []
@@ -1294,6 +1313,8 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 tryceratops = []
+types-requests = []
+types-urllib3 = []
 typing-extensions = []
 urllib3 = []
 virtualenv = []
