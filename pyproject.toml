@@ -47,6 +47,7 @@ isort = "*"
 mkdocstrings = "*"
 mkdocs-material = "*"
 mypy = "*"
+types-requests = "*"
 pep8-naming = "*"
 pre-commit = "*"
 pymdown-extensions = "*"
@@ -86,7 +87,7 @@ exclude_lines = [
 
 [tool.mypy]
 disallow_any_unimported = true
-disallow_untyped_defs = true
+disallow_untyped_defs = false
 no_implicit_optional = true
 strict_equality = true
 warn_unused_ignores = true
