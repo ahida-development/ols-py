@@ -29,6 +29,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10.1, <4.0"
+requests = ">=2.0, <3.0"
+marshmallow = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 autoflake = "*"
