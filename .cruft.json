@@ -1,0 +1,18 @@
+{
+  "template": "https://github.com/woltapp/wolt-python-package-cookiecutter",
+  "commit": "6669a067eeaaed3bee84312428a3e94cd13295f2",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author_name": "Marius Mather",
+      "author_email": "marius.mather@sydney.edu.au",
+      "github_username": "marius-mather",
+      "project_name": "ols-py",
+      "project_slug": "ols-py",
+      "package_name": "ols_py",
+      "project_short_description": "Python client for the Ontology Lookup Service",
+      "_template": "https://github.com/woltapp/wolt-python-package-cookiecutter"
+    }
+  },
+  "directory": null
+}
