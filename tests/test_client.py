@@ -1,11 +1,11 @@
 from unittest import mock
 
-import marshmallow
+import pydantic
 import pytest
 import requests
 
 from ols_py.client import OlsClient
-from ols_py.schema import ApiBaseSchema, OlsErrorSchema
+from ols_py.schema import ApiRoot, OlsErrorSchema
 
 EBI_BASE_URL = "https://www.ebi.ac.uk/ols/api/"
 
@@ -15,12 +15,12 @@ def ebi_client():
     return OlsClient(base_url=EBI_BASE_URL)
 
 
-class DummySchema(marshmallow.Schema):
+class DummySchema(pydantic.BaseModel):
     """
     Very simple schema used for mock testing
     """
 
-    number = marshmallow.fields.Integer()
+    number: str
 
 
 # TODO: can't seem to get an actual JSON response for errors,
@@ -45,9 +45,8 @@ def test_get_base_api(ebi_client):
     calling the root / API path (links to other resources)
     """
     resp = ebi_client.get("/")
-    validation_errors = ApiBaseSchema().validate(resp)
-    assert not validation_errors
-    assert resp["_links"]["ontologies"]
+    data = ApiRoot(**resp)
+    assert len(data.links.ontologies) > 0
 
 
 def test_get_with_schema_valid_data():
@@ -58,20 +57,18 @@ def test_get_with_schema_valid_data():
     client = OlsClient(EBI_BASE_URL)
     # Return data from the get request that matches the schema
     client.get = mock.MagicMock(return_value={"number": 3})
-    resp = client.get_with_schema(DummySchema(), "/")
-    validation_errors = DummySchema().validate(resp)
-    assert not validation_errors
-    assert resp["number"] == 3
+    data = client.get_with_schema(DummySchema, "/")
+    assert data.number == 3
 
 
 def test_get_with_schema_invalid_data():
     """
-    Test we get a ValueError when the data returned
+    Test we get a ValidationError when the data returned
     by the API doesn't match our schema
     """
     client = OlsClient(EBI_BASE_URL)
     # Return data from the get request that doesn't match the
     # schema
     client.get = mock.MagicMock(return_value={"number": "word"})
-    with pytest.raises(ValueError):
-        client.get_with_schema(DummySchema(), "/")
+    with pytest.raises(pydantic.ValidationError):
+        client.get_with_schema(DummySchema, "/")

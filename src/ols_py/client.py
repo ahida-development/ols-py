@@ -1,8 +1,10 @@
-from typing import Optional
+from typing import Optional, Type, TypeVar
 
 import furl
-import marshmallow
+import pydantic
 import requests
+
+S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 
 
 class OlsClient:
@@ -19,10 +21,19 @@ class OlsClient:
         return resp.json()
 
     def get_with_schema(
-        self, schema: marshmallow.Schema, path: str, params: Optional[dict] = None
-    ):
+        self, schema: Type[S], path: str, params: Optional[dict] = None
+    ) -> S:
+        """
+        Get data from ``path`` and parse it with ``schema`` to return
+        a pydantic object.
+
+        :param schema: Pydantic class/model inheriting from BaseModel
+        :param path: API path (excluding the base API url)
+        :param params: Query parameters
+        :return: Pydantic model instance created from ``schema``
+        :raises: ``pydantic.ValidationError`` if response data fails
+           to validate.
+        """
         resp = self.get(path=path, params=params)
-        errors = schema.validate(resp)
-        if errors:
-            raise ValueError(f"Schema failed to parse: {errors}")
-        return resp
+        obj = schema(**resp)
+        return obj

@@ -1,30 +1,31 @@
-import marshmallow
-from marshmallow import fields
+import typing
+
+from pydantic import BaseModel, Field, HttpUrl
 
 
-class LinkSchema(marshmallow.Schema):
-    href = fields.Url()
+class Link(BaseModel):
+    href: HttpUrl
 
 
-class BaseLinksSchema(marshmallow.Schema):
-    ontologies = fields.Nested(LinkSchema)
-    individuals = fields.Nested(LinkSchema)
-    terms = fields.Nested(LinkSchema)
-    properties = fields.Nested(LinkSchema)
-    profile = fields.Nested(LinkSchema)
+class RootLinks(BaseModel):
+    ontologies: list[Link]
+    individuals: list[Link]
+    terms: list[Link]
+    properties: list[Link]
+    profile = list[Link]
 
 
-class ApiBaseSchema(marshmallow.Schema):
-    links = fields.Nested(BaseLinksSchema, data_key="_links")
+class ApiRoot(BaseModel):
+    links: RootLinks = Field(None, alias="_links")
 
 
-class OlsErrorSchema(marshmallow.Schema):
+class OlsErrorSchema(BaseModel):
     """
     Error data returned the OLS API for a bad request/error
     """
 
-    error = fields.String()
-    message = fields.String()
-    path = fields.String()
-    status = fields.Integer()
-    timestamp = fields.Number()
+    error: str
+    message: str
+    path: str
+    status: int
+    timestamp: typing.Union[int, float]
