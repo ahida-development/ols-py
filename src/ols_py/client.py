@@ -81,3 +81,9 @@ class OlsClient:
         path = f"/ontologies/{ontology_id}/"
         ontology_item = self.get_with_schema(schema.OntologyItem, path)
         return ontology_item
+
+    def get_term(self, ontology_id: str, iri: str) -> schema.Term:
+        iri = self._quote_iri(iri)
+        path = f"/ontologies/{ontology_id}/terms/{iri}"
+        term = self.get_with_schema(schema.Term, path)
+        return term
