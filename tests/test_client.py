@@ -60,6 +60,15 @@ def test_get_ontology(ebi_client):
     assert item.numberOfTerms > 0
 
 
+def test_get_term(ebi_client):
+    term = ebi_client.get_term(
+        ontology_id="go", iri="http://purl.obolibrary.org/obo/GO_0043226"
+    )
+    assert term.ontology_name == "go"
+    assert term.iri == "http://purl.obolibrary.org/obo/GO_0043226"
+    assert term.label == "organelle"
+
+
 def test_get_with_schema_valid_data():
     """
     Test we just get the data returned and no exceptions
@@ -84,3 +93,13 @@ def test_get_with_schema_invalid_data():
     with pytest.raises(pydantic.ValidationError):
         resp = client.get_with_schema(DummySchema, "/")
         print(resp)
+
+
+def test_quote_iri():
+    """
+    Make sure we are correctly double URL encoding IRIs for
+    when they need to be used in paths etc.
+    """
+    iri = "http://purl.obolibrary.org/obo/GO_0043226"
+    expected = "http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FGO_0043226"
+    assert OlsClient._quote_iri(iri) == expected
