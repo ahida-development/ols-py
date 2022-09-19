@@ -4,6 +4,8 @@ import furl
 import pydantic
 import requests
 
+from . import schema
+
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 
 
@@ -51,3 +53,12 @@ class OlsClient:
         resp = self.get(path=path, params=params)
         obj = schema(**resp)
         return obj
+
+    def get_ontologies(self) -> schema.OntologyList:
+        ontology_list = self.get_with_schema(schema.OntologyList, "/ontologies")
+        return ontology_list
+
+    def get_ontology(self, ontology_id: str) -> schema.OntologyItem:
+        path = f"/ontologies/{ontology_id}/"
+        ontology_item = self.get_with_schema(schema.OntologyItem, path)
+        return ontology_item

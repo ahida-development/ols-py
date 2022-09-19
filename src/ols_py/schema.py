@@ -1,4 +1,4 @@
-import typing
+from __future__ import annotations
 
 from pydantic import BaseModel, Field, HttpUrl
 
@@ -8,15 +8,41 @@ class Link(BaseModel):
 
 
 class RootLinks(BaseModel):
-    ontologies: list[Link]
-    individuals: list[Link]
-    terms: list[Link]
-    properties: list[Link]
-    profile = list[Link]
+    ontologies: Link
+    individuals: Link
+    terms: Link
+    properties: Link
+    profile: Link
 
 
 class ApiRoot(BaseModel):
     links: RootLinks = Field(None, alias="_links")
+
+
+class OntologyItem(BaseModel):
+    ontologyId: str
+    status: str
+    numberOfProperties: int
+    numberOfTerms: int
+
+    class Config:
+        extra = "allow"
+
+
+class OntologyListEmbedded(BaseModel):
+    ontologies: list[OntologyItem]
+
+
+class OntologyList(BaseModel):
+    page: PageInfo
+    embedded: OntologyListEmbedded = Field(None, alias="_embedded")
+
+
+class PageInfo(BaseModel):
+    size: int
+    totalElements: int
+    totalPages: int
+    number: int
 
 
 class OlsErrorSchema(BaseModel):
@@ -28,4 +54,8 @@ class OlsErrorSchema(BaseModel):
     message: str
     path: str
     status: int
-    timestamp: typing.Union[int, float]
+    timestamp: int | float
+
+
+# Update forward refs for any types that were annotated as string
+OntologyList.update_forward_refs()
