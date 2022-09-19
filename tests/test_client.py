@@ -20,7 +20,7 @@ class DummySchema(pydantic.BaseModel):
     Very simple schema used for mock testing
     """
 
-    number: str
+    number: int
 
 
 # TODO: can't seem to get an actual JSON response for errors,
@@ -46,7 +46,18 @@ def test_get_base_api(ebi_client):
     """
     resp = ebi_client.get("/")
     data = ApiRoot(**resp)
-    assert len(data.links.ontologies) > 0
+    assert data.links.ontologies.href
+
+
+def test_get_ontologies(ebi_client):
+    data = ebi_client.get_ontologies()
+    assert len(data.embedded.ontologies) > 0
+
+
+def test_get_ontology(ebi_client):
+    item = ebi_client.get_ontology("efo")
+    assert item.ontologyId == "efo"
+    assert item.numberOfTerms > 0
 
 
 def test_get_with_schema_valid_data():
@@ -71,4 +82,5 @@ def test_get_with_schema_invalid_data():
     # schema
     client.get = mock.MagicMock(return_value={"number": "word"})
     with pytest.raises(pydantic.ValidationError):
-        client.get_with_schema(DummySchema, "/")
+        resp = client.get_with_schema(DummySchema, "/")
+        print(resp)
