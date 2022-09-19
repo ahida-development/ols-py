@@ -28,8 +28,7 @@ plugins:
       default_handler: python
       handlers:
         python:
+          paths: [src]
           rendering:
             show_signature_annotations: true
             show_source: true
-      watch:
-        - src/ols_py
