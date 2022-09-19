@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Optional
+
+import pydantic
 from pydantic import BaseModel, Field, HttpUrl
 
 
@@ -36,6 +39,19 @@ class OntologyListEmbedded(BaseModel):
 class OntologyList(BaseModel):
     page: PageInfo
     embedded: OntologyListEmbedded = Field(None, alias="_embedded")
+
+
+class Term(BaseModel):
+    iri: pydantic.AnyUrl
+    label: str
+    description: list[str]
+    synonyms: Optional[list[str]]
+    ontology_name: str
+    ontology_iri: pydantic.AnyUrl
+    obo_id: str
+
+    class Config:
+        extra = "allow"
 
 
 class PageInfo(BaseModel):

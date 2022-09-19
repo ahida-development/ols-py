@@ -30,11 +30,6 @@ repos:
         entry: poetry run black
         language: system
         types: [python]
-      - id: pyupgrade
-        name: pyupgrade
-        entry: poetry run pyupgrade --py37-plus
-        language: system
-        types: [python]
       - id: kacl-verify
         name: kacl-verify
         entry: poetry run kacl-cli verify
