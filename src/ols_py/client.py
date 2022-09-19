@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 from typing import Optional, Type, TypeVar
 from urllib.parse import quote_plus
 
 import pydantic
 import requests
 
-from . import schema
+from . import schemas
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 
@@ -73,17 +75,17 @@ class OlsClient:
         obj = schema(**resp)
         return obj
 
-    def get_ontologies(self) -> schema.OntologyList:
-        ontology_list = self.get_with_schema(schema.OntologyList, "/ontologies")
+    def get_ontologies(self) -> schemas.OntologyList:
+        ontology_list = self.get_with_schema(schemas.OntologyList, "/ontologies")
         return ontology_list
 
-    def get_ontology(self, ontology_id: str) -> schema.OntologyItem:
+    def get_ontology(self, ontology_id: str) -> schemas.OntologyItem:
         path = f"/ontologies/{ontology_id}/"
-        ontology_item = self.get_with_schema(schema.OntologyItem, path)
+        ontology_item = self.get_with_schema(schemas.OntologyItem, path)
         return ontology_item
 
-    def get_term(self, ontology_id: str, iri: str) -> schema.Term:
+    def get_term(self, ontology_id: str, iri: str) -> schemas.Term:
         iri = self._quote_iri(iri)
         path = f"/ontologies/{ontology_id}/terms/{iri}"
-        term = self.get_with_schema(schema.Term, path)
+        term = self.get_with_schema(schemas.Term, path)
         return term

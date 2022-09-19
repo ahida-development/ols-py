@@ -5,7 +5,7 @@ import pytest
 import requests
 
 from ols_py.client import OlsClient
-from ols_py.schema import ApiRoot, OlsErrorSchema
+from ols_py.schemas import ApiRoot, OlsErrorSchema
 
 EBI_BASE_URL = "https://www.ebi.ac.uk/ols/api/"
 
