@@ -68,7 +68,7 @@ class OlsClient:
         :param path: API path (excluding the base API url)
         :param params: Query parameters
         :return: Pydantic model instance created from ``schema``
-        :raises: ``pydantic.ValidationError`` if response data fails
+        :raises pydantic.ValidationError: if response data fails
            to validate.
         """
         resp = self.get(path=path, params=params)
