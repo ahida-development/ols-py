@@ -8,8 +8,8 @@ authors = [
 license = "MIT"
 readme = "README.md"
 
-documentation = "https://marius-mather.github.io/ols-py"
-homepage = "https://marius-mather.github.io/ols-py"
+documentation = "https://ahida-development.github.io/ols-py"
+homepage = "https://ahida-development.github.io/ols-py"
 repository = "https://github.com/ahida-development/ols-py"
 
 classifiers = [

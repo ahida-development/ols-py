@@ -8,9 +8,9 @@
 
 ---
 
-**Documentation**: [https://marius-mather.github.io/ols-py](https://marius-mather.github.io/ols-py)
+**Documentation**: [https://ahida-development.github.io/ols-py](https://ahida-development.github.io/ols-py)
 
-**Source Code**: [https://github.com/marius-mather/ols-py](https://github.com/marius-mather/ols-py)
+**Source Code**: [https://github.com/ahida-development/ols-py](https://github.com/ahida-development/ols-py)
 
 **PyPI**: [https://pypi.org/project/ols-py/](https://pypi.org/project/ols-py/)
 
@@ -29,7 +29,7 @@ pip install ols-py
 * Clone this repository
 * Requirements:
   * [Poetry](https://python-poetry.org/)
-  * Python 3.7+
+  * Python 3.10+
 * Create a virtual environment and install the dependencies
 
 ```sh
@@ -56,12 +56,12 @@ The documentation is automatically generated from the content of the [docs direc
 
 ### Releasing
 
-Trigger the [Draft release workflow](https://github.com/marius-mather/ols-py/actions/workflows/draft_release.yml)
+Trigger the [Draft release workflow](https://github.com/ahida-development/ols-py/actions/workflows/draft_release.yml)
 (press _Run workflow_). This will update the changelog & version and create a GitHub release which is in _Draft_ state.
 
 Find the draft release from the
-[GitHub releases](https://github.com/marius-mather/ols-py/releases) and publish it. When
- a release is published, it'll trigger [release](https://github.com/marius-mather/ols-py/blob/master/.github/workflows/release.yml) workflow which creates PyPI
+[GitHub releases](https://github.com/ahida-development/ols-py/releases) and publish it. When
+ a release is published, it'll trigger [release](https://github.com/ahida-development/ols-py/blob/master/.github/workflows/release.yml) workflow which creates PyPI
  release and deploys updated documentation.
 
 ### Pre-commit
