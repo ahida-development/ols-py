@@ -3,8 +3,11 @@
 [![PyPI](https://img.shields.io/pypi/v/ols-py?style=flat-square)](https://pypi.python.org/pypi/ols-py/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ols-py?style=flat-square)](https://pypi.python.org/pypi/ols-py/)
 [![PyPI - License](https://img.shields.io/pypi/l/ols-py?style=flat-square)](https://pypi.python.org/pypi/ols-py/)
+[![Tests][github actions badge]][github actions page]
 [![Coookiecutter - Wolt](https://img.shields.io/badge/cookiecutter-Wolt-00c2e8?style=flat-square&logo=cookiecutter&logoColor=D4AA00&link=https://github.com/woltapp/wolt-python-package-cookiecutter)](https://github.com/woltapp/wolt-python-package-cookiecutter)
 
+[github actions badge]: https://github.com/ahida-development/ols-py/workflows/test/badge.svg
+[github actions page]: https://github.com/ahida-development/ols-py/actions?workflow=test
 
 ---
 
