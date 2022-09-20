@@ -49,6 +49,18 @@ def test_get_base_api(ebi_client):
     assert data.links.ontologies.href
 
 
+def test_client_base_url():
+    """
+    Check we always add a / to the end of base_url
+    """
+    with_slash = "www.example.com/api/"
+    client = OlsClient(base_url=with_slash)
+    assert client.base_url == with_slash
+    no_slash = "www.example.com/api"
+    client2 = OlsClient(base_url=no_slash)
+    assert client2.base_url == with_slash
+
+
 def test_get_ontologies(ebi_client):
     data = ebi_client.get_ontologies()
     assert len(data.embedded.ontologies) > 0
