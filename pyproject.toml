@@ -73,7 +73,6 @@ include = '\.pyi?$'
 [tool.pytest.ini_options]
 addopts = """\
     --cov ols_py \
-    --cov tests \
     --cov-report term-missing \
     --no-cov-on-fail \
 """
