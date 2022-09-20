@@ -26,7 +26,7 @@ class OlsClient:
             base_url = base_url + "/"
         self.base_url = base_url
         self._session = requests.Session()
-        self._session.headers = {"accept": "application/json"}
+        self._session.headers.update({"accept": "application/json"})
         # TODO: do we need to set access-control-allow-origin header?
 
     def _create_url(self, path: str) -> str:
@@ -55,7 +55,8 @@ class OlsClient:
         url = self._create_url(path)
         resp = self._session.get(url=url, params=params)
         resp.raise_for_status()
-        return resp.json()
+        json_data: dict = resp.json()
+        return json_data
 
     def get_with_schema(
         self, schema: Type[S], path: str, params: Optional[dict] = None
