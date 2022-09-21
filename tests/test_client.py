@@ -81,6 +81,25 @@ def test_get_term(ebi_client):
     assert term.label == "organelle"
 
 
+@pytest.mark.parametrize(
+    "relatives",
+    [
+        "parents",
+        "children",
+        "ancestors",
+        "descendants",
+        "hierarchical_ancestors",
+        "hierarchical_descendants",
+    ],
+)
+def test_get_term_relatives(relatives, ebi_client):
+    method = getattr(ebi_client, f"get_term_{relatives}")
+    resp = method(ontology_id="go", term_id="GO:0043226")
+    assert len(resp.embedded.terms) > 0
+    relative = resp.embedded.terms[0]
+    assert relative.iri
+
+
 def test_get_with_schema_valid_data():
     """
     Test we just get the data returned and no exceptions
