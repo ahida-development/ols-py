@@ -90,3 +90,29 @@ class OlsClient:
         path = f"/ontologies/{ontology_id}/terms/{iri}"
         term = self.get_with_schema(schemas.Term, path)
         return term
+
+    @staticmethod
+    def _add_wildcards(query: str) -> str:
+        with_wildcards = [f"{term}*" for term in query.split(" ")]
+        return " ".join(with_wildcards)
+
+    def search(
+        self, query: str, params: dict, add_wildcards: bool = False
+    ) -> schemas.SearchResponse:
+        """
+        Search for ``query`` using the /search API endpoint.
+
+        :param query: term(s) to search for
+        :param params: dictionary of search parameters
+        :param add_wildcards: Add a wildcard * to each word in ``query`` -
+           good for broad/flexible searches
+        :return:
+        """
+        if add_wildcards:
+            query = self._add_wildcards(query)
+        validated_params = schemas.SearchParams(q=query, **params)
+        query_params = validated_params.get_query_dict()
+        resp = self.get_with_schema(
+            schemas.SearchResponse, "/search", params=query_params
+        )
+        return resp
