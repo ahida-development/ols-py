@@ -133,6 +133,13 @@ def test_search(ebi_client):
     assert first_result.iri
 
 
+def test_search_add_wildcards(ebi_client):
+    resp = ebi_client.search(
+        query="patella", params={"ontology": "mondo", "rows": 10}, add_wildcards=True
+    )
+    assert resp.response.numFound > 0
+
+
 def test_quote_iri():
     """
     Make sure we are correctly double URL encoding IRIs for
