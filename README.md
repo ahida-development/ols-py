@@ -21,6 +21,13 @@
 
 Python client for the Ontology Lookup Service
 
+**Current status:** in development, some endpoints and schemas are not
+implemented yet.
+
+Features:
+
+* Responses validated with [pydantic](https://github.com/pydantic/pydantic)
+
 ## Installation
 
 ```sh
