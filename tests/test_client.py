@@ -107,6 +107,13 @@ def test_get_with_schema_invalid_data():
         print(resp)
 
 
+def test_search(ebi_client):
+    resp = ebi_client.search(query="patella", params={"ontology": "mondo", "rows": 10})
+    assert resp.response.numFound > 0
+    first_result = resp.response.docs[0]
+    assert first_result.iri
+
+
 def test_quote_iri():
     """
     Make sure we are correctly double URL encoding IRIs for
@@ -115,3 +122,12 @@ def test_quote_iri():
     iri = "http://purl.obolibrary.org/obo/GO_0043226"
     expected = "http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FGO_0043226"
     assert OlsClient._quote_iri(iri) == expected
+
+
+def test_add_wildcards():
+    """
+    Check we add a wildcard * to each word in the query
+    """
+    query = "multiple terms"
+    result = OlsClient._add_wildcards(query)
+    assert result == "multiple* terms*"
