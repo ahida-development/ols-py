@@ -34,4 +34,4 @@ plugins:
             show_root_heading: true
             docstring_section_style: list
             show_signature_annotations: true
-            show_source: true
+            show_source: false
