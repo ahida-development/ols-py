@@ -93,7 +93,7 @@ class OlsClient:
 
     def _get_term_relatives(
         self, relatives: schemas.RelativeTypes, ontology_id: str, term_id: str
-    ):
+    ) -> schemas.TermRelatives:
         """
         Common method for getting a term's parents, children, ancestors etc.
         """
