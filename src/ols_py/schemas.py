@@ -6,8 +6,30 @@ import pydantic
 from pydantic import BaseModel, Field, HttpUrl, validator
 
 
+class PageInfo(BaseModel):
+    size: int
+    totalElements: int
+    totalPages: int
+    number: int
+
+
 class Link(BaseModel):
     href: HttpUrl
+
+
+class Term(BaseModel):
+    iri: pydantic.AnyUrl
+    label: str
+    description: list[str]
+    synonyms: Optional[list[str]]
+    ontology_name: str
+    ontology_iri: pydantic.AnyUrl
+    # Higher level terms may not have an obo ID, e.g.
+    # terms will be descendants of http://www.w3.org/2002/07/owl#Thing
+    obo_id: Optional[str]
+
+    class Config:
+        extra = "allow"
 
 
 class RootLinks(BaseModel):
@@ -41,24 +63,37 @@ class OntologyList(BaseModel):
     embedded: OntologyListEmbedded = Field(None, alias="_embedded")
 
 
-class Term(BaseModel):
-    iri: pydantic.AnyUrl
-    label: str
-    description: list[str]
-    synonyms: Optional[list[str]]
-    ontology_name: str
-    ontology_iri: pydantic.AnyUrl
-    obo_id: str
+class TermRelativesEmbedded(BaseModel):
+    """
+    "_embedded" field used in responses for parents, ancestors
+    """
 
-    class Config:
-        extra = "allow"
+    terms: list[Term]
 
 
-class PageInfo(BaseModel):
-    size: int
-    totalElements: int
-    totalPages: int
-    number: int
+class TermRelativesLinks(BaseModel):
+    self: Link
+
+
+RelativeTypes = Literal[
+    "parents",
+    "children",
+    "ancestors",
+    "descendants",
+    "hierarchicalDescendants",
+    "hierarchicalAncestors",
+]
+
+
+class TermRelatives(BaseModel):
+    """
+    Response returned for term parents, ancestors, descendants etc.
+    The actual terms are at ``response.embedded.terms``
+    """
+
+    embedded: TermRelativesEmbedded = Field(None, alias="_embedded")
+    links: TermRelativesLinks = Field(None, alias="_links")
+    page: PageInfo
 
 
 # TODO: what other fields are allowed here? it's not

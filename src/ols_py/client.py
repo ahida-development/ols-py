@@ -91,6 +91,97 @@ class OlsClient:
         term = self.get_with_schema(schemas.Term, path)
         return term
 
+    def _get_term_relatives(
+        self, relatives: schemas.RelativeTypes, ontology_id: str, term_id: str
+    ):
+        """
+        Common method for getting a term's parents, children, ancestors etc.
+        """
+        path = f"/ontologies/{ontology_id}/{relatives}"
+        return self.get_with_schema(schemas.TermRelatives, path, params={"id": term_id})
+
+    def get_term_parents(self, ontology_id: str, term_id: str) -> schemas.TermRelatives:
+        """
+        Get parents for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "parents", ontology_id=ontology_id, term_id=term_id
+        )
+
+    def get_term_children(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.TermRelatives:
+        """
+        Get children for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "children", ontology_id=ontology_id, term_id=term_id
+        )
+
+    def get_term_ancestors(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.TermRelatives:
+        """
+        Get ancestors for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "ancestors", ontology_id=ontology_id, term_id=term_id
+        )
+
+    def get_term_descendants(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.TermRelatives:
+        """
+        Get descendants for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "descendants", ontology_id=ontology_id, term_id=term_id
+        )
+
+    def get_term_hierarchical_ancestors(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.TermRelatives:
+        """
+        Get hierarchical ancestors for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
+        )
+
+    def get_term_hierarchical_descendants(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.TermRelatives:
+        """
+        Get hierarchical descendants for a term.
+        :param ontology_id: Name of ontology, e.g. "go"
+        :param term_id: Term ID (URI, short form or obo ID)
+        :return: response object. the actual terms are in a list at
+          ``response.embedded.terms``
+        """
+        return self._get_term_relatives(
+            "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
+        )
+
     @staticmethod
     def _add_wildcards(query: str) -> str:
         with_wildcards = [f"{term}*" for term in query.split(" ")]
