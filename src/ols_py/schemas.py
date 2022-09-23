@@ -178,7 +178,7 @@ class SearchParams(BaseModel):
 
 # TODO: more fields to include here
 class SearchResultItem(BaseModel):
-    id: str
+    id: Optional[str]
     iri: Optional[str]
     short_form: Optional[str]
     description: Optional[list[str]]
