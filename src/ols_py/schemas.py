@@ -5,6 +5,8 @@ from typing import Literal, Optional
 import pydantic
 from pydantic import BaseModel, Field, HttpUrl, validator
 
+EntityType = Literal["class", "property", "individual", "ontology"]
+
 
 class PageInfo(BaseModel):
     size: int
@@ -107,6 +109,7 @@ SearchReturnFields = Literal[
     "ontology_prefix",
     "description",
     "type",
+    "synonym",
 ]
 
 SearchQueryFields = Literal[
@@ -180,6 +183,11 @@ class SearchResultItem(BaseModel):
     short_form: Optional[str]
     description: Optional[list[str]]
     label: Optional[str]
+    synonym: Optional[list[str]]
+    obo_id: Optional[str]
+    ontology_name: Optional[str]
+    ontology_prefix: Optional[str]
+    type: Optional[EntityType]
 
 
 class SearchResponseResponse(BaseModel):

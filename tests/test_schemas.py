@@ -1,3 +1,6 @@
+from typing import get_args
+
+from ols_py import schemas
 from ols_py.schemas import SearchParams
 
 
@@ -44,3 +47,14 @@ def test_search_params_get_query_dict():
     assert query_dict["ontology"] == "mondo,upheno"
     # Single values should be untouched
     assert query_dict["fieldList"] == "iri"
+
+
+def test_search_fields():
+    """
+    Check fields match between SearchReturnFields and SearchResultItem
+    """
+    return_fields = set(get_args(schemas.SearchReturnFields))
+    result_item_fields = set(schemas.SearchResultItem.schema()["properties"].keys())
+    # Result items have an extra id field
+    assert result_item_fields - return_fields == {"id"}
+    assert return_fields - result_item_fields == set()
