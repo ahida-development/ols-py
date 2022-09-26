@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 import pydantic
 from pydantic import BaseModel, Field, HttpUrl, validator
@@ -20,15 +20,28 @@ class Link(BaseModel):
 
 
 class Term(BaseModel):
+    """
+    Response returned by term endpoints
+    """
+
     iri: pydantic.AnyUrl
     label: str
     description: list[str]
+    annotation: dict[str, list[str]]
     synonyms: Optional[list[str]]
     ontology_name: str
+    ontology_prefix: str
     ontology_iri: pydantic.AnyUrl
+    is_obsolete: bool
+    term_replaced_by: Optional[Any]
+    has_children: bool
+    is_root: bool
+    short_form: str
     # Higher level terms may not have an obo ID, e.g.
     # terms will be descendants of http://www.w3.org/2002/07/owl#Thing
     obo_id: Optional[str]
+    in_subset: Optional[Any]
+    links: dict[str, Link] = Field(..., alias="_links")
 
     class Config:
         extra = "allow"
