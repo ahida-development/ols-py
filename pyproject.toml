@@ -52,6 +52,7 @@ pep8-naming = "*"
 pre-commit = "*"
 pymdown-extensions = "*"
 pytest = "*"
+pytest-xdist = "*"
 pytest-github-actions-annotate-failures = "*"
 pytest-cov = "*"
 python-kacl = "*"
@@ -72,6 +73,7 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 addopts = """\
+    --numprocesses auto
     --cov ols_py \
     --cov-report term-missing \
     --no-cov-on-fail \
