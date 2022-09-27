@@ -111,7 +111,8 @@ class OlsClient:
         if iri and params:
             raise ValueError("Pass either iri or params arguments, not both")
         if iri:
-            path = f"/terms/findByIdAndIsDefiningOntology/{iri}"
+            iri_encoded = self._quote_iri(iri)
+            path = f"/terms/findByIdAndIsDefiningOntology/{iri_encoded}"
             return self.get_with_schema(schemas.TermInDefiningOntology, path=path)
         if params:
             path = "/terms/findByIdAndIsDefiningOntology"
