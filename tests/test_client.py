@@ -134,6 +134,10 @@ def test_search(ebi_client):
 
 
 def test_search_add_wildcards(ebi_client):
+    """
+    Test that add_wildcards option performs search with wildcards added
+    to each term
+    """
     resp = ebi_client.search(
         query="hi dys", params={"ontology": "mondo", "rows": 5}, add_wildcards=True
     )
