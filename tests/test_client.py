@@ -135,9 +135,12 @@ def test_search(ebi_client):
 
 def test_search_add_wildcards(ebi_client):
     resp = ebi_client.search(
-        query="patella", params={"ontology": "mondo", "rows": 10}, add_wildcards=True
+        query="hi dys", params={"ontology": "mondo", "rows": 5}, add_wildcards=True
     )
-    assert resp.response.numFound > 0
+    manual_resp = ebi_client.search(
+        query="hi* dys*", params={"ontology": "mondo", "rows": 5}
+    )
+    assert resp.response.numFound == manual_resp.response.numFound
 
 
 def test_quote_iri():
