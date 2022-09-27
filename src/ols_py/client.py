@@ -91,6 +91,35 @@ class OlsClient:
         term = self.get_with_schema(schemas.Term, path)
         return term
 
+    def get_term_in_defining_ontology(
+        self,
+        iri: Optional[str] = None,
+        params: Optional[schemas.TermInDefiningOntologyParams] = None,
+    ) -> schemas.TermInDefiningOntology:
+        """
+        Use the /terms/findByIdAndIsDefiningOntology/ to find a term in
+        its defining ontology. This allows you to look up a term by IRI
+        alone.
+
+        :param iri: IRI for the term. You can either provide this, or use the ``params``
+           argument (not both).
+        :param params: GET parameters. the /findByIdAndIsDefiningOntology/ endpoint
+           allows "iri", "short_form", "obo_id", or "id"
+        :return: JSON data. Terms are at resp.embedded.terms
+        :raises ValueError: if both/neither IRI and params arguments were given.
+        """
+        if iri and params:
+            raise ValueError("Pass either iri or params arguments, not both")
+        if iri:
+            path = f"/terms/findByIdAndIsDefiningOntology/{iri}"
+            return self.get_with_schema(schemas.TermInDefiningOntology, path=path)
+        if params:
+            path = "/terms/findByIdAndIsDefiningOntology"
+            return self.get_with_schema(
+                schemas.TermInDefiningOntology, path=path, params=params
+            )
+        raise ValueError("One of iri or params arguments is required")
+
     def _get_term_relatives(
         self, relatives: schemas.RelativeTypes, ontology_id: str, term_id: str
     ) -> schemas.TermRelatives:

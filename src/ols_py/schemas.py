@@ -78,9 +78,9 @@ class OntologyList(BaseModel):
     embedded: OntologyListEmbedded = Field(None, alias="_embedded")
 
 
-class TermRelativesEmbedded(BaseModel):
+class EmbeddedTerms(BaseModel):
     """
-    "_embedded" field used in responses for parents, ancestors
+    "_embedded" field used in responses returning terms
     """
 
     terms: list[Term]
@@ -106,8 +106,26 @@ class TermRelatives(BaseModel):
     The actual terms are at ``response.embedded.terms``
     """
 
-    embedded: TermRelativesEmbedded = Field(None, alias="_embedded")
+    embedded: EmbeddedTerms = Field(None, alias="_embedded")
     links: TermRelativesLinks = Field(None, alias="_links")
+    page: PageInfo
+
+
+class TermInDefiningOntologyLinks(BaseModel):
+    self: Link
+
+
+TermInDefiningOntologyParams = dict[Literal["iri", "short_form", "obo_id", "id"], str]
+
+
+class TermInDefiningOntology(BaseModel):
+    """
+    Response returned for /terms/findByIdAndIsDefiningOntology/
+    endpoint
+    """
+
+    embedded: EmbeddedTerms = Field(..., alias="_embedded")
+    links: TermInDefiningOntologyLinks = Field(..., alias="_links")
     page: PageInfo
 
 
