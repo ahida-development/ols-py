@@ -199,6 +199,10 @@ class SearchParams(BaseModel):
         return v
 
     def get_query_dict(self) -> dict[str, str | bool | int]:
+        """
+        Convert to dictionary, converting any list values to
+        comma-separated string, as required by the search endpoint
+        """
         query_dict = {}
         for field_name, value in self:
             if isinstance(value, list):
