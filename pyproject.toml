@@ -74,6 +74,7 @@ include = '\.pyi?$'
 [tool.pytest.ini_options]
 addopts = """\
     --numprocesses auto
+    --quiet
     --cov ols_py \
     --cov-report term-missing \
     --no-cov-on-fail \
