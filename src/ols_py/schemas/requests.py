@@ -6,6 +6,9 @@ from pydantic import BaseModel, conint, validator
 
 from .common import EntityType
 
+PositiveInt = conint(ge=0)
+StrictlyPositiveInt = conint(ge=1)
+
 
 class PageParams(BaseModel):
     """
@@ -13,8 +16,8 @@ class PageParams(BaseModel):
     resources
     """
 
-    size: Optional[conint(ge=1)]
-    page: Optional[conint(ge=0)]
+    size: Optional[StrictlyPositiveInt]
+    page: Optional[PositiveInt]
 
 
 SearchReturnFields = Literal[
