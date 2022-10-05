@@ -49,8 +49,9 @@ class OlsClient:
         Perform a GET request to the API.
 
         :param path: API path (excluding base url)
-        :param params: Query parametersgg
+        :param params: Query parameters
         :return: JSON data, as a dict
+        :raises HTTPError: if response is not OK
         """
         url = self._create_url(path)
         resp = self._session.get(url=url, params=params)
