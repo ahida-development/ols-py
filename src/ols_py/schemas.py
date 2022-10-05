@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Literal, Optional
 
 import pydantic
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, HttpUrl, conint, validator
 
 EntityType = Literal["class", "property", "individual", "ontology"]
 
@@ -17,6 +17,16 @@ class PageInfo(BaseModel):
     totalElements: int
     totalPages: int
     number: int
+
+
+class PageParams(BaseModel):
+    """
+    Pagination params accepted by endpoints that return multiple
+    resources
+    """
+
+    size: Optional[conint(ge=1)]
+    page: Optional[conint(ge=0)]
 
 
 class Link(BaseModel):
