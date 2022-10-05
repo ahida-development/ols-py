@@ -93,6 +93,11 @@ class OlsClient:
         return ontology_list
 
     def get_ontology(self, ontology_id: str) -> schemas.OntologyItem:
+        """
+        Get details for a single ontology
+
+        :param ontology_id: Ontology ID/name, e.g. "mondo"
+        """
         path = f"/ontologies/{ontology_id}/"
         ontology_item = self.get_with_schema(schemas.OntologyItem, path)
         return ontology_item
