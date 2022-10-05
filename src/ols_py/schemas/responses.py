@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import Any, Literal, Optional
+from typing import Any, Optional
 
 import pydantic
-from pydantic import BaseModel, Field, HttpUrl, conint, validator
+from pydantic import BaseModel, Field, HttpUrl
 
-EntityType = Literal["class", "property", "individual", "ontology"]
+from ols_py.schemas.common import EntityType
 
 
 class PageInfo(BaseModel):
@@ -17,16 +17,6 @@ class PageInfo(BaseModel):
     totalElements: int
     totalPages: int
     number: int
-
-
-class PageParams(BaseModel):
-    """
-    Pagination params accepted by endpoints that return multiple
-    resources
-    """
-
-    size: Optional[conint(ge=1)]
-    page: Optional[conint(ge=0)]
 
 
 class Link(BaseModel):
@@ -67,7 +57,12 @@ class Term(BaseModel):
         extra = "allow"
 
 
-class RootLinks(BaseModel):
+class ApiInfoLinks(BaseModel):
+    """
+    Set of links returned in the root endpoint/
+    API ifno
+    """
+
     ontologies: Link
     individuals: Link
     terms: Link
@@ -75,8 +70,13 @@ class RootLinks(BaseModel):
     profile: Link
 
 
-class ApiRoot(BaseModel):
-    links: RootLinks = Field(None, alias="_links")
+class ApiInfo(BaseModel):
+    """
+    Response returned by the root API endpoint,
+    links to other endpoints/resources
+    """
+
+    links: ApiInfoLinks = Field(..., alias="_links")
 
 
 class OntologyItem(BaseModel):
@@ -110,16 +110,6 @@ class TermRelativesLinks(BaseModel):
     self: Link
 
 
-RelativeTypes = Literal[
-    "parents",
-    "children",
-    "ancestors",
-    "descendants",
-    "hierarchicalDescendants",
-    "hierarchicalAncestors",
-]
-
-
 class TermRelatives(BaseModel):
     """
     Response returned for term parents, ancestors, descendants etc.
@@ -135,9 +125,6 @@ class TermInDefiningOntologyLinks(BaseModel):
     self: Link
 
 
-TermInDefiningOntologyParams = dict[Literal["iri", "short_form", "obo_id", "id"], str]
-
-
 class TermInDefiningOntology(BaseModel):
     """
     Response returned for /terms/findByIdAndIsDefiningOntology/
@@ -149,89 +136,6 @@ class TermInDefiningOntology(BaseModel):
     page: PageInfo
 
 
-# TODO: what other fields are allowed here? it's not
-#   obvious from the docs
-SearchReturnFields = Literal[
-    "iri",
-    "label",
-    "short_form",
-    "obo_id",
-    "ontology_name",
-    "ontology_prefix",
-    "description",
-    "type",
-    "synonym",
-]
-
-SearchQueryFields = Literal[
-    "label",
-    "synonym",
-    "description",
-    "short_form",
-    "obo_id",
-    "annotations",
-    "logical_description",
-    "iri",
-]
-
-
-class SearchParams(BaseModel):
-    """
-    Schema for parameters accepted by the search endpoint.
-    Note you should use get_query_dict() to get a dictionary
-    you can use in the request - we want to convert any
-    lists of options to comma-separated strings, which
-    we can't do with the default dict() method
-    """
-
-    q: str
-    ontology: Optional[list[str]]
-    type: Optional[Literal["class", "property", "individual", "ontology"]]
-    slim: Optional[list[str]]
-    fieldList: Optional[list[SearchReturnFields]]
-    queryFields: Optional[list[SearchQueryFields]]
-    exact: Optional[bool]
-    groupField: Optional[bool]
-    obsoletes: Optional[bool]
-    local: Optional[bool]
-    childrenOf: Optional[list[str]]
-    allChildrenOf: Optional[list[str]]
-    rows: Optional[int]
-    start: Optional[int]
-
-    @validator(
-        "ontology",
-        "slim",
-        "childrenOf",
-        "allChildrenOf",
-        "fieldList",
-        "queryFields",
-        pre=True,
-    )
-    def _single_to_list(cls, v):
-        """
-        If a single string is passed but we expect
-        list[str], convert to a 1-item list automatically.
-        Called at the pre-validation step.
-        """
-        if isinstance(v, str):
-            return [v]
-        return v
-
-    def get_query_dict(self) -> dict[str, str | bool | int]:
-        """
-        Convert to dictionary, converting any list values to
-        comma-separated string, as required by the search endpoint
-        """
-        query_dict = {}
-        for field_name, value in self:
-            if isinstance(value, list):
-                value = ",".join(value)
-            query_dict[field_name] = value
-        return query_dict
-
-
-# TODO: more fields to include here
 class SearchResultItem(BaseModel):
     id: Optional[str]
     iri: Optional[str]
@@ -266,7 +170,3 @@ class OlsErrorSchema(BaseModel):
     path: str
     status: int
     timestamp: int | float
-
-
-# Update forward refs for any types that were annotated as string
-OntologyList.update_forward_refs()

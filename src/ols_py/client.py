@@ -77,42 +77,51 @@ class OlsClient:
         obj = schema(**resp)
         return obj
 
+    def get_api_info(self) -> schemas.responses.ApiInfo:
+        """
+        Get the list of endpoints supported by the API
+        """
+        resp = self.get_with_schema(schemas.responses.ApiInfo, path="/")
+        return resp
+
     def get_ontologies(
         self, page: int = None, size: int = None
-    ) -> schemas.OntologyList:
+    ) -> schemas.responses.OntologyList:
         """
         Get the list of ontologies the OLS instance has.
 
         :param page: Page number of results (starting at 0)
         :param size: Number of results per page (API default is 20)
         """
-        params = schemas.PageParams(page=page, size=size).dict(exclude_none=True)
+        params = schemas.requests.PageParams(page=page, size=size).dict(
+            exclude_none=True
+        )
         ontology_list = self.get_with_schema(
-            schemas.OntologyList, "/ontologies", params=params
+            schemas.responses.OntologyList, "/ontologies", params=params
         )
         return ontology_list
 
-    def get_ontology(self, ontology_id: str) -> schemas.OntologyItem:
+    def get_ontology(self, ontology_id: str) -> schemas.responses.OntologyItem:
         """
         Get details for a single ontology
 
         :param ontology_id: Ontology ID/name, e.g. "mondo"
         """
         path = f"/ontologies/{ontology_id}/"
-        ontology_item = self.get_with_schema(schemas.OntologyItem, path)
+        ontology_item = self.get_with_schema(schemas.responses.OntologyItem, path)
         return ontology_item
 
-    def get_term(self, ontology_id: str, iri: str) -> schemas.Term:
+    def get_term(self, ontology_id: str, iri: str) -> schemas.responses.Term:
         iri = self._quote_iri(iri)
         path = f"/ontologies/{ontology_id}/terms/{iri}"
-        term = self.get_with_schema(schemas.Term, path)
+        term = self.get_with_schema(schemas.responses.Term, path)
         return term
 
     def get_term_in_defining_ontology(
         self,
         iri: Optional[str] = None,
-        params: Optional[schemas.TermInDefiningOntologyParams] = None,
-    ) -> schemas.TermInDefiningOntology:
+        params: Optional[schemas.requests.TermInDefiningOntologyParams] = None,
+    ) -> schemas.responses.TermInDefiningOntology:
         """
         Use the /terms/findByIdAndIsDefiningOntology/ to find a term in
         its defining ontology. This allows you to look up a term by IRI
@@ -130,24 +139,30 @@ class OlsClient:
         if iri:
             iri_encoded = self._quote_iri(iri)
             path = f"/terms/findByIdAndIsDefiningOntology/{iri_encoded}"
-            return self.get_with_schema(schemas.TermInDefiningOntology, path=path)
+            return self.get_with_schema(
+                schemas.responses.TermInDefiningOntology, path=path
+            )
         if params:
             path = "/terms/findByIdAndIsDefiningOntology"
             return self.get_with_schema(
-                schemas.TermInDefiningOntology, path=path, params=params
+                schemas.responses.TermInDefiningOntology, path=path, params=params
             )
         raise ValueError("One of iri or params arguments is required")
 
     def _get_term_relatives(
-        self, relatives: schemas.RelativeTypes, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+        self, relatives: schemas.requests.RelativeTypes, ontology_id: str, term_id: str
+    ) -> schemas.responses.TermRelatives:
         """
         Common method for getting a term's parents, children, ancestors etc.
         """
         path = f"/ontologies/{ontology_id}/{relatives}"
-        return self.get_with_schema(schemas.TermRelatives, path, params={"id": term_id})
+        return self.get_with_schema(
+            schemas.responses.TermRelatives, path, params={"id": term_id}
+        )
 
-    def get_term_parents(self, ontology_id: str, term_id: str) -> schemas.TermRelatives:
+    def get_term_parents(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.responses.TermRelatives:
         """
         Get parents for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -161,7 +176,7 @@ class OlsClient:
 
     def get_term_children(
         self, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+    ) -> schemas.responses.TermRelatives:
         """
         Get children for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -175,7 +190,7 @@ class OlsClient:
 
     def get_term_ancestors(
         self, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+    ) -> schemas.responses.TermRelatives:
         """
         Get ancestors for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -189,7 +204,7 @@ class OlsClient:
 
     def get_term_descendants(
         self, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+    ) -> schemas.responses.TermRelatives:
         """
         Get descendants for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -203,7 +218,7 @@ class OlsClient:
 
     def get_term_hierarchical_ancestors(
         self, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+    ) -> schemas.responses.TermRelatives:
         """
         Get hierarchical ancestors for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -217,7 +232,7 @@ class OlsClient:
 
     def get_term_hierarchical_descendants(
         self, ontology_id: str, term_id: str
-    ) -> schemas.TermRelatives:
+    ) -> schemas.responses.TermRelatives:
         """
         Get hierarchical descendants for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -236,7 +251,7 @@ class OlsClient:
 
     def search(
         self, query: str, params: dict, add_wildcards: bool = False
-    ) -> schemas.SearchResponse:
+    ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
@@ -248,9 +263,9 @@ class OlsClient:
         """
         if add_wildcards:
             query = self._add_wildcards(query)
-        validated_params = schemas.SearchParams(q=query, **params)
+        validated_params = schemas.requests.SearchParams(q=query, **params)
         query_params = validated_params.get_query_dict()
         resp = self.get_with_schema(
-            schemas.SearchResponse, "/search", params=query_params
+            schemas.responses.SearchResponse, "/search", params=query_params
         )
         return resp

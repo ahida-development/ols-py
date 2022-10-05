@@ -5,7 +5,7 @@ import pytest
 import requests
 
 from ols_py.client import OlsClient
-from ols_py.schemas import ApiRoot, OlsErrorSchema
+from ols_py.schemas.responses import OlsErrorSchema
 
 EBI_BASE_URL = "https://www.ebi.ac.uk/ols/api/"
 
@@ -39,16 +39,6 @@ def test_ols_error():
     assert validation_errors
 
 
-def test_get_base_api(ebi_client):
-    """
-    Test that we get the expected data when
-    calling the root / API path (links to other resources)
-    """
-    resp = ebi_client.get("/")
-    data = ApiRoot(**resp)
-    assert data.links.ontologies.href
-
-
 def test_client_base_url():
     """
     Check we always add a / to the end of base_url
@@ -59,6 +49,11 @@ def test_client_base_url():
     no_slash = "www.example.com/api"
     client2 = OlsClient(base_url=no_slash)
     assert client2.base_url == with_slash
+
+
+def test_get_api_info(ebi_client):
+    resp = ebi_client.get_api_info()
+    assert resp.links.terms.href
 
 
 def test_get_ontologies(ebi_client):

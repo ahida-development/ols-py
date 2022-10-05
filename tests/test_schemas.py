@@ -1,7 +1,8 @@
 from typing import get_args
 
-from ols_py import schemas
-from ols_py.schemas import SearchParams
+import ols_py.schemas.requests
+import ols_py.schemas.responses
+from ols_py.schemas.requests import SearchParams
 
 
 def test_convert_list_of_strings():
@@ -53,8 +54,10 @@ def test_search_fields():
     """
     Check fields match between SearchReturnFields and SearchResultItem
     """
-    return_fields = set(get_args(schemas.SearchReturnFields))
-    result_item_fields = set(schemas.SearchResultItem.schema()["properties"].keys())
+    return_fields = set(get_args(ols_py.schemas.requests.SearchReturnFields))
+    result_item_fields = set(
+        ols_py.schemas.responses.SearchResultItem.schema()["properties"].keys()
+    )
     # Result items have an extra id field
     assert result_item_fields - return_fields == {"id"}
     assert return_fields - result_item_fields == set()
