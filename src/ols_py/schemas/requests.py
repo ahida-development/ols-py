@@ -2,12 +2,9 @@ from __future__ import annotations
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, conint, validator
+from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator
 
 from .common import EntityType
-
-PositiveInt = conint(ge=0)
-StrictlyPositiveInt = conint(ge=1)
 
 
 class PageParams(BaseModel):
@@ -16,8 +13,8 @@ class PageParams(BaseModel):
     resources
     """
 
-    size: Optional[StrictlyPositiveInt]
-    page: Optional[PositiveInt]
+    size: Optional[PositiveInt]
+    page: Optional[NonNegativeInt]
 
 
 SearchReturnFields = Literal[
