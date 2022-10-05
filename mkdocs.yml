@@ -17,7 +17,8 @@ theme:
 
 nav:
   - Introduction: 'index.md'
-  - api_docs.md
+  - Client: 'client.md'
+  - Request/Response Schemas: 'schemas.md'
   - changelog.md
 
 markdown_extensions:
