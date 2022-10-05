@@ -1,5 +1,7 @@
 site_name: ols-py
 repo_url: https://github.com/ahida-development/ols-py
+extra_css:
+  - css/extra.css
 
 theme:
   name: material
