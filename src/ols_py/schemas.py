@@ -9,6 +9,10 @@ EntityType = Literal["class", "property", "individual", "ontology"]
 
 
 class PageInfo(BaseModel):
+    """
+    Page information returned in paginated responses
+    """
+
     size: int
     totalElements: int
     totalPages: int
@@ -16,6 +20,10 @@ class PageInfo(BaseModel):
 
 
 class Link(BaseModel):
+    """
+    Link item returned in responses
+    """
+
     href: HttpUrl
 
 
@@ -27,6 +35,8 @@ class Term(BaseModel):
     iri: pydantic.AnyUrl
     label: str
     description: list[str]
+    # Not specifying annotations for now, not sure if these
+    #   are fixed
     annotation: dict[str, list[str]]
     synonyms: Optional[list[str]]
     ontology_name: str
