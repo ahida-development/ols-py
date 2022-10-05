@@ -77,8 +77,19 @@ class OlsClient:
         obj = schema(**resp)
         return obj
 
-    def get_ontologies(self) -> schemas.OntologyList:
-        ontology_list = self.get_with_schema(schemas.OntologyList, "/ontologies")
+    def get_ontologies(
+        self, page: int = None, size: int = None
+    ) -> schemas.OntologyList:
+        """
+        Get the list of ontologies the OLS instance has.
+
+        :param page: Page number of results (starting at 0)
+        :param size: Number of results per page (API default is 20)
+        """
+        params = schemas.PageParams(page=page, size=size).dict(exclude_none=True)
+        ontology_list = self.get_with_schema(
+            schemas.OntologyList, "/ontologies", params=params
+        )
         return ontology_list
 
     def get_ontology(self, ontology_id: str) -> schemas.OntologyItem:
