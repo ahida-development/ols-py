@@ -66,6 +66,12 @@ def test_get_ontologies(ebi_client):
     assert len(data.embedded.ontologies) > 0
 
 
+def test_get_ontologies_paginated(ebi_client):
+    data = ebi_client.get_ontologies(page=2, size=5)
+    assert data.page.size == 5
+    assert data.page.number == 2
+
+
 def test_get_ontology(ebi_client):
     item = ebi_client.get_ontology("efo")
     assert item.ontologyId == "efo"
