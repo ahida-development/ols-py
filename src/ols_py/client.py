@@ -85,7 +85,7 @@ class OlsClient:
         return resp
 
     def get_ontologies(
-        self, page: int = None, size: int = None
+        self, page: Optional[int] = None, size: Optional[int] = None
     ) -> schemas.responses.OntologyList:
         """
         Get the list of ontologies the OLS instance has.
