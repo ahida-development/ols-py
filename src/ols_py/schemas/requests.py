@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator, constr
+from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator
 
-from .common import EntityType
+from .common import AnnotationFieldName, EntityType
 
 
 class PageParams(BaseModel):
@@ -66,7 +66,7 @@ class SearchParams(BaseModel):
     type: Optional[EntityType]
     """Type of term to search for, e.g. "class", "property" """
     slim: Optional[list[str]]
-    fieldList: Optional[list[SearchReturnFields | constr(regex=r"^\w+_annotation$")]]
+    fieldList: Optional[list[SearchReturnFields | AnnotationFieldName]]
     """Which fields to return in the results"""
     queryFields: Optional[list[SearchQueryFields]]
     """Which fields to search over"""
