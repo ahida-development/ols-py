@@ -19,26 +19,29 @@ class PageParams(BaseModel):
     """Which page to fetch (starting at 0)"""
 
 
+# TODO: unclear whether the API accepts the same set of fields
+#   for query/return. Defining them separately for now
 SearchReturnFields = Literal[
+    "annotations",
+    "description",
     "iri",
     "label",
-    "short_form",
     "obo_id",
     "ontology_name",
     "ontology_prefix",
-    "description",
-    "type",
+    "short_form",
     "synonym",
+    "type",
 ]
 SearchQueryFields = Literal[
-    "label",
-    "synonym",
-    "description",
-    "short_form",
-    "obo_id",
     "annotations",
-    "logical_description",
+    "description",
     "iri",
+    "label",
+    "logical_description",
+    "obo_id",
+    "short_form",
+    "synonym",
 ]
 
 
