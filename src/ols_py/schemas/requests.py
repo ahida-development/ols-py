@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator
+from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator, constr
 
 from .common import EntityType
 
@@ -21,8 +21,12 @@ class PageParams(BaseModel):
 
 # TODO: unclear whether the API accepts the same set of fields
 #   for query/return. Defining them separately for now
+# NOTE: fields seem to be badly documented. The best canonical source I've
+#   been able to find seems to be going directly to the SOLR config for OLS
+#   at https://github.com/EBISPOT/OLS/blob/dev/ols-solr/src/main/solr-5-config/ontology/conf/schema.xml
 SearchReturnFields = Literal[
-    "annotations",
+    "annotations",  # TODO: not sure if annotations does anything, annotations_trimmed does
+    "annotations_trimmed",
     "description",
     "iri",
     "label",
@@ -30,9 +34,15 @@ SearchReturnFields = Literal[
     "ontology_name",
     "ontology_prefix",
     "short_form",
+    "subset",
     "synonym",
     "type",
 ]
+"""
+When specifying fields to return for the search, there's a predefined
+set of fields you can get, or you can access a particular annotation
+via "<annotation_name>_annotation"
+"""
 SearchQueryFields = Literal[
     "annotations",
     "description",
@@ -61,7 +71,7 @@ class SearchParams(BaseModel):
     type: Optional[EntityType]
     """Type of term to search for, e.g. "class", "property" """
     slim: Optional[list[str]]
-    fieldList: Optional[list[SearchReturnFields]]
+    fieldList: Optional[list[SearchReturnFields | constr(regex=r"^\w+_annotation$")]]
     """Which fields to return in the results"""
     queryFields: Optional[list[SearchQueryFields]]
     """Which fields to search over"""
