@@ -38,11 +38,6 @@ SearchReturnFields = Literal[
     "synonym",
     "type",
 ]
-"""
-When specifying fields to return for the search, there's a predefined
-set of fields you can get, or you can access a particular annotation
-via "<annotation_name>_annotation"
-"""
 SearchQueryFields = Literal[
     "annotations",
     "description",
