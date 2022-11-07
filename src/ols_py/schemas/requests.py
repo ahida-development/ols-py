@@ -46,6 +46,7 @@ SearchQueryFields = Literal[
     "logical_description",
     "obo_id",
     "short_form",
+    "subset",
     "synonym",
 ]
 
