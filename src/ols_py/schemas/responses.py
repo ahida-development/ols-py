@@ -110,9 +110,10 @@ class TermRelativesLinks(BaseModel):
     self: Link
 
 
-class TermRelatives(BaseModel):
+class MultipleTerms(BaseModel):
     """
-    Response returned for term parents, ancestors, descendants etc.
+    Response returned for endpoints which return multiple term results,
+    e.g. parents, ancestors, descendants etc.
     The actual terms are at ``response.embedded.terms``
     """
 

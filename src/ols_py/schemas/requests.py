@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal, Optional, TypedDict
 
 from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator
 
@@ -136,3 +136,11 @@ RelativeTypes = Literal[
 ]
 
 TermInDefiningOntologyParams = dict[Literal["iri", "short_form", "obo_id", "id"], str]
+
+
+class GetTermsParams(TypedDict):
+    iri: Optional[str]
+    short_form: Optional[str]
+    obo_id: Optional[str]
+    page: Optional[int]
+    size: Optional[int]

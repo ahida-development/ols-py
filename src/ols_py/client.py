@@ -117,6 +117,19 @@ class OlsClient:
         term = self.get_with_schema(schemas.responses.Term, path)
         return term
 
+    def get_terms(
+        self, ontology_id: str, params: schemas.requests.GetTermsParams = None
+    ) -> schemas.responses.MultipleTerms:
+        """
+        Get multiple terms, possibly filtering by iri, short_form or obo_id.
+
+        Allows page and size params
+        """
+        path = f"/ontologies/{ontology_id}/terms"
+        return self.get_with_schema(
+            schemas.responses.MultipleTerms, path, params=params
+        )
+
     def get_term_in_defining_ontology(
         self,
         iri: Optional[str] = None,
@@ -151,18 +164,18 @@ class OlsClient:
 
     def _get_term_relatives(
         self, relatives: schemas.requests.RelativeTypes, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Common method for getting a term's parents, children, ancestors etc.
         """
         path = f"/ontologies/{ontology_id}/{relatives}"
         return self.get_with_schema(
-            schemas.responses.TermRelatives, path, params={"id": term_id}
+            schemas.responses.MultipleTerms, path, params={"id": term_id}
         )
 
     def get_term_parents(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get parents for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -176,7 +189,7 @@ class OlsClient:
 
     def get_term_children(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get children for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -190,7 +203,7 @@ class OlsClient:
 
     def get_term_ancestors(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get ancestors for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -204,7 +217,7 @@ class OlsClient:
 
     def get_term_descendants(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get descendants for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -218,7 +231,7 @@ class OlsClient:
 
     def get_term_hierarchical_ancestors(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get hierarchical ancestors for a term.
         :param ontology_id: Name of ontology, e.g. "go"
@@ -232,7 +245,7 @@ class OlsClient:
 
     def get_term_hierarchical_descendants(
         self, ontology_id: str, term_id: str
-    ) -> schemas.responses.TermRelatives:
+    ) -> schemas.responses.MultipleTerms:
         """
         Get hierarchical descendants for a term.
         :param ontology_id: Name of ontology, e.g. "go"
