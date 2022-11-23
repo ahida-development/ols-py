@@ -26,7 +26,9 @@ implemented yet.
 
 Features:
 
-* Responses validated with [pydantic](https://github.com/pydantic/pydantic)
+* Type annotated so you know which parameters can be used for each endpoint
+* Responses validated and parsed with [pydantic](https://github.com/pydantic/pydantic) for
+  easy access to response data
 
 ## Installation
 
