@@ -137,7 +137,7 @@ RelativeTypes = Literal[
 
 
 class TermInDefiningOntologyParams(TypedDict):
-    iri = Optional[str]
+    iri: Optional[str]
     short_form: Optional[str]
     obo_id: Optional[str]
     id: Optional[str]
