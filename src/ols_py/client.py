@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Type, TypeVar
+from typing import Any, Mapping, Optional, Type, TypeVar
 from urllib.parse import quote_plus
 
 import pydantic
@@ -9,6 +9,7 @@ import requests
 from . import schemas
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
+ParamsMapping = Mapping[str, Any]
 
 
 class OlsClient:
@@ -44,7 +45,7 @@ class OlsClient:
         """
         return quote_plus(quote_plus(iri))
 
-    def get(self, path: str, params: Optional[dict] = None) -> dict:
+    def get(self, path: str, params: Optional[ParamsMapping] = None) -> dict:
         """
         Perform a GET request to the API.
 
@@ -60,7 +61,7 @@ class OlsClient:
         return json_data
 
     def get_with_schema(
-        self, schema: Type[S], path: str, params: Optional[dict] = None
+        self, schema: Type[S], path: str, params: Optional[ParamsMapping] = None
     ) -> S:
         """
         Get data from ``path`` and parse it with ``schema`` to return
@@ -118,7 +119,7 @@ class OlsClient:
         return term
 
     def get_terms(
-        self, ontology_id: str, params: schemas.requests.GetTermsParams = None
+        self, ontology_id: str, params: Optional[schemas.requests.GetTermsParams] = None
     ) -> schemas.responses.MultipleTerms:
         """
         Get multiple terms, possibly filtering by iri, short_form or obo_id.

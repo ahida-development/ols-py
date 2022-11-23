@@ -135,7 +135,12 @@ RelativeTypes = Literal[
     "hierarchicalAncestors",
 ]
 
-TermInDefiningOntologyParams = dict[Literal["iri", "short_form", "obo_id", "id"], str]
+
+class TermInDefiningOntologyParams(TypedDict):
+    iri = Optional[str]
+    short_form: Optional[str]
+    obo_id: Optional[str]
+    id: Optional[str]
 
 
 class GetTermsParams(TypedDict):
