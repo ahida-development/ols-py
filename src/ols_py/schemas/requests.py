@@ -128,7 +128,9 @@ class SearchParams(BaseModel):
 
 RelativeTypes = Literal[
     "parents",
+    "hierarchicalParents",
     "children",
+    "hierarchicalChildren",
     "ancestors",
     "descendants",
     "hierarchicalDescendants",

@@ -188,6 +188,13 @@ class OlsClient:
             "parents", ontology_id=ontology_id, term_id=term_id
         )
 
+    def get_term_hierarchical_parents(
+        self, ontology_id: str, term_id: str
+    ) -> schemas.responses.MultipleTerms:
+        return self._get_term_relatives(
+            "hierarchicalParents", ontology_id=ontology_id, term_id=term_id
+        )
+
     def get_term_children(
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
