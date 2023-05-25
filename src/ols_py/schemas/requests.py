@@ -69,7 +69,7 @@ class SearchParams(BaseModel):
     slim: Optional[list[str]]
     fieldList: Optional[list[SearchReturnFields | AnnotationFieldName]]
     """Which fields to return in the results"""
-    queryFields: Optional[list[SearchQueryFields]]
+    queryFields: Optional[list[SearchQueryFields | AnnotationFieldName]]
     """Which fields to search over"""
     exact: Optional[bool]
     groupField: Optional[bool]
