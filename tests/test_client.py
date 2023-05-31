@@ -5,14 +5,20 @@ import pytest
 import requests
 
 from ols_py.client import OlsClient
+from ols_py.instances import EBI, EBI_OLS4
 from ols_py.schemas.responses import OlsErrorSchema
 
-EBI_BASE_URL = "https://www.ebi.ac.uk/ols/api/"
+
+@pytest.fixture(scope="session")
+def use_ols4(pytestconfig):
+    return pytestconfig.getoption("ols4")
 
 
 @pytest.fixture
-def ebi_client():
-    return OlsClient(base_url=EBI_BASE_URL)
+def ebi_client(use_ols4):
+    if use_ols4:
+        return OlsClient(base_url=EBI_OLS4)
+    return OlsClient(base_url=EBI)
 
 
 class DummySchema(pydantic.BaseModel):
@@ -29,10 +35,10 @@ class DummySchema(pydantic.BaseModel):
 def test_ols_error():
     """
     Perform a bad request so we can check that the
-    error response cane be parsed with our schema
+    error response can be parsed with our schema
     """
     resp = requests.get(
-        EBI_BASE_URL + "/ontologies/foobar", headers={"accept": "application/json"}
+        EBI + "/ontologies/foobar", headers={"accept": "application/json"}
     )
     print(resp.content)
     validation_errors = OlsErrorSchema().validate(resp.json())
@@ -101,29 +107,27 @@ def test_get_term_relatives(relatives, ebi_client):
     assert relative.iri
 
 
-def test_get_with_schema_valid_data():
+def test_get_with_schema_valid_data(ebi_client):
     """
     Test we just get the data returned and no exceptions
     when data matches the schema
     """
-    client = OlsClient(EBI_BASE_URL)
     # Return data from the get request that matches the schema
-    client.get = mock.MagicMock(return_value={"number": 3})
-    data = client.get_with_schema(DummySchema, "/")
+    ebi_client.get = mock.MagicMock(return_value={"number": 3})
+    data = ebi_client.get_with_schema(DummySchema, "/")
     assert data.number == 3
 
 
-def test_get_with_schema_invalid_data():
+def test_get_with_schema_invalid_data(ebi_client):
     """
     Test we get a ValidationError when the data returned
     by the API doesn't match our schema
     """
-    client = OlsClient(EBI_BASE_URL)
     # Return data from the get request that doesn't match the
     # schema
-    client.get = mock.MagicMock(return_value={"number": "word"})
+    ebi_client.get = mock.MagicMock(return_value={"number": "word"})
     with pytest.raises(pydantic.ValidationError):
-        resp = client.get_with_schema(DummySchema, "/")
+        resp = ebi_client.get_with_schema(DummySchema, "/")
         print(resp)
 
 
