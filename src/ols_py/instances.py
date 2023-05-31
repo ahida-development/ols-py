@@ -28,6 +28,7 @@ SOFTWARE.
 """
 
 EBI = "https://www.ebi.ac.uk/ols/api/"
+EBI_OLS4 = "https://www.ebi.ac.uk/ols4/api/"
 TIB = "https://service.tib.eu/ts4tib/api/"
 NFDI4I = "https://service.tib.eu/ts4ing/api/"
 NFDI4Chem = "https://terminology.nfdi4chem.de/ts/api/"
