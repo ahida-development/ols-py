@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Experimental support for [OLS4](https://www.ebi.ac.uk/ols4) instances (using the current
+  API). OLS4 should support the same API, but currently a few responses seem
+  to have a different structure, so start implementing and testing against it.
+
+  To use the OLS4 instance, import `Ols4Client` from `ols_py.ols4_client`
 
 ## [0.2.7] - 2023-05-25
 ### Changed
@@ -90,4 +96,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [0.1.0]: https://github.com/ahida-development/ols-py/compare/0.0.3...0.1.0
 [0.0.3]: https://github.com/ahida-development/ols-py/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/ahida-development/ols-py/tree/0.0.2
-
