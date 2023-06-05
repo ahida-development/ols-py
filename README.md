@@ -21,8 +21,11 @@
 
 Python client for the Ontology Lookup Service
 
-**Current status:** in development, some endpoints and schemas are not
-implemented yet.
+**Current status:**
+
+* In development, some endpoints and schemas are not implemented yet.
+* Experimental support for OLS4 instances (using the existing API) - `Ols4Client` has been tweaked
+  to match changes to the API/responses.
 
 Features:
 
