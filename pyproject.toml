@@ -32,7 +32,13 @@ python = ">=3.10.1, <4.0"
 requests = ">=2.0, <3.0"
 pydantic = "^1.10.2"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.jupyterlab]
+optional = true
+
+[tool.poetry.group.jupyterlab.dependencies]
+jupyterlab = "^3.6"
+
+[tool.poetry.group.dev.dependencies]
 autoflake = "*"
 black = "*"
 flake8 = "*"
