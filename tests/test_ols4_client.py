@@ -30,11 +30,11 @@ def test_get_term_in_defining_ontology(ols4_client):
     term = resp.embedded.terms[0]
     assert term.iri == iri
     assert term.ontology_name == "mondo"
-    # OBO ID search doesn't seem to work currently
-    # TODO: Update this if/when OBO ID is supported in OLS4
+    # OBO ID search should be working now
     obo_id = "MONDO:0018660"
     resp_from_obo = ols4_client.get_term_in_defining_ontology(params={"obo_id": obo_id})
-    assert resp_from_obo.page.totalElements == 0
+    assert resp_from_obo.page.totalElements == 1
+    assert resp_from_obo.embedded.terms[0].iri == iri
     # Short form should work
     short_form = "MONDO_0018660"
     resp_from_short_form = ols4_client.get_term_in_defining_ontology(
