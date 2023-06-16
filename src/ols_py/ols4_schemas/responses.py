@@ -26,9 +26,13 @@ class SearchResultItem(BaseModel, extra=Extra.allow):
     type: Optional[EntityType]
 
 
+class SearchResponseResponse(BaseModel):
+    docs: list[SearchResultItem]
+
+
 class SearchResponse(BaseModel):
     responseHeader: dict
-    docs: list[SearchResultItem]
+    response: SearchResponseResponse
 
 
 class TermInDefiningOntology(responses.TermInDefiningOntology):
