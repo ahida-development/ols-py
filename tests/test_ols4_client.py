@@ -21,6 +21,29 @@ def test_search(ols4_client):
     assert first_result.iri
 
 
+def test_search_returns_synonyms(ols4_client):
+    """
+    Test we can get synonyms via the fieldList parameter
+
+    (this got lost during the OLS3 -> OLS4 upgrade but should be working again)
+    """
+    resp = ols4_client.search(
+        query="Bos taurus",
+        params={
+            "ontology": "ncbitaxon",
+            "rows": 10,
+            "queryFields": ["label"],
+            "fieldList": ["iri", "label", "synonym"],
+            # Use exact, we just want to make sure we get bos taurus so
+            #   we can check its synonyms
+            "exact": True,
+            "childrenOf": ["http://purl.obolibrary.org/obo/NCBITaxon_9903"],
+        },
+    )
+    first_result = resp.response.docs[0]
+    assert "cow" in first_result.synonym
+
+
 def test_get_term_in_defining_ontology(ols4_client):
     """
     Test various forms of ID that are/aren't working in OLs4
