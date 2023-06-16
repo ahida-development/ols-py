@@ -16,8 +16,8 @@ def test_search(ols4_client):
     Structure of responses is different in OLS4
     """
     resp = ols4_client.search(query="patella", params={"ontology": "mondo", "rows": 10})
-    assert len(resp.docs) > 0
-    first_result = resp.docs[0]
+    assert len(resp.response.docs) > 0
+    first_result = resp.response.docs[0]
     assert first_result.iri
 
 
