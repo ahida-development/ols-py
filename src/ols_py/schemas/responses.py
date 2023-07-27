@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 
 import pydantic
-from pydantic import BaseModel, Extra, Field, HttpUrl
+from pydantic import BaseModel, ConfigDict, Extra, Field, HttpUrl
 
 from ols_py.schemas.common import EntityType
 
@@ -38,23 +38,21 @@ class Term(BaseModel):
     # Not specifying annotations for now, not sure if these
     #   are fixed
     annotation: dict[str, list[str]]
-    synonyms: Optional[list[str]]
+    synonyms: Optional[list[str]] = None
     ontology_name: str
     ontology_prefix: str
     ontology_iri: pydantic.AnyUrl
     is_obsolete: bool
-    term_replaced_by: Optional[Any]
+    term_replaced_by: Optional[Any] = None
     has_children: bool
     is_root: bool
     short_form: str
     # Higher level terms may not have an obo ID, e.g.
     # terms will be descendants of http://www.w3.org/2002/07/owl#Thing
-    obo_id: Optional[str]
-    in_subset: Optional[Any]
+    obo_id: Optional[str] = None
+    in_subset: Optional[Any] = None
     links: dict[str, Link] = Field(..., alias="_links")
-
-    class Config:
-        extra = "allow"
+    model_config = ConfigDict(extra="allow")
 
 
 class ApiInfoLinks(BaseModel):
@@ -84,9 +82,7 @@ class OntologyItem(BaseModel):
     status: str
     numberOfProperties: int
     numberOfTerms: int
-
-    class Config:
-        extra = "allow"
+    model_config = ConfigDict(extra="allow")
 
 
 class OntologyListEmbedded(BaseModel):
@@ -138,19 +134,19 @@ class TermInDefiningOntology(BaseModel):
 
 
 class SearchResultItem(BaseModel, extra=Extra.allow):
-    id: Optional[str]
-    annotations: Optional[list[str]]
-    annotations_trimmed: Optional[list[str]]
-    description: Optional[list[str]]
-    iri: Optional[str]
-    label: Optional[str]
-    obo_id: Optional[str]
-    ontology_name: Optional[str]
-    ontology_prefix: Optional[str]
-    subset: Optional[list[str]]
-    short_form: Optional[str]
-    synonym: Optional[list[str]]
-    type: Optional[EntityType]
+    id: Optional[str] = None
+    annotations: Optional[list[str]] = None
+    annotations_trimmed: Optional[list[str]] = None
+    description: Optional[list[str]] = None
+    iri: Optional[str] = None
+    label: Optional[str] = None
+    obo_id: Optional[str] = None
+    ontology_name: Optional[str] = None
+    ontology_prefix: Optional[str] = None
+    subset: Optional[list[str]] = None
+    short_form: Optional[str] = None
+    synonym: Optional[list[str]] = None
+    type: Optional[EntityType] = None
 
 
 class SearchResponseResponse(BaseModel):
