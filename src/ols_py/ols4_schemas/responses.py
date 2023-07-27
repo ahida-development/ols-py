@@ -11,19 +11,19 @@ from ..schemas.common import EntityType
 # Structure of search results has changed from OLS v3,
 #   some fields are now list[str] instead of str
 class SearchResultItem(BaseModel, extra=Extra.allow):
-    id: Optional[str]
-    annotations: Optional[list[str]]
-    annotations_trimmed: Optional[list[str]]
-    description: Optional[list[str]]
-    iri: Optional[str]
-    label: Optional[list[str]]
-    obo_id: Optional[list[str]]
-    ontology_name: Optional[str]
-    ontology_prefix: Optional[str]
-    subset: Optional[list[str]]
-    short_form: Optional[list[str]]
-    synonym: Optional[list[str]]
-    type: Optional[EntityType]
+    id: Optional[str] = None
+    annotations: Optional[list[str]] = None
+    annotations_trimmed: Optional[list[str]] = None
+    description: Optional[list[str]] = None
+    iri: Optional[str] = None
+    label: Optional[list[str]] = None
+    obo_id: Optional[list[str]] = None
+    ontology_name: Optional[str] = None
+    ontology_prefix: Optional[str] = None
+    subset: Optional[list[str]] = None
+    short_form: Optional[list[str]] = None
+    synonym: Optional[list[str]] = None
+    type: Optional[EntityType] = None
 
 
 class SearchResponseResponse(BaseModel):
