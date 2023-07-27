@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal, Optional, TypedDict
 
-from pydantic import BaseModel, NonNegativeInt, PositiveInt, validator
+from pydantic import BaseModel, NonNegativeInt, PositiveInt, field_validator
 
 from .common import AnnotationFieldName, EntityType
 
@@ -13,9 +13,9 @@ class PageParams(BaseModel):
     resources
     """
 
-    size: Optional[PositiveInt]
+    size: Optional[PositiveInt] = None
     """Number of results per page"""
-    page: Optional[NonNegativeInt]
+    page: Optional[NonNegativeInt] = None
     """Which page to fetch (starting at 0)"""
 
 
@@ -35,7 +35,10 @@ SearchReturnFields = Literal[
     "ontology_prefix",
     "short_form",
     "subset",
+    # TODO: OLS3 uses synonym, OLS4 uses synonyms. Best option for now
+    #   is to allow both.
     "synonym",
+    "synonyms",
     "type",
 ]
 SearchQueryFields = Literal[
@@ -62,47 +65,48 @@ class SearchParams(BaseModel):
 
     q: str
     """Query to search for"""
-    ontology: Optional[list[str]]
+    ontology: Optional[list[str]] = None
     """Ontologies to search, e.g. `["mondo", "upheno"]`"""
-    type: Optional[EntityType]
+    type: Optional[EntityType] = None
     """Type of term to search for, e.g. "class", "property" """
-    slim: Optional[list[str]]
-    fieldList: Optional[list[SearchReturnFields | AnnotationFieldName]]
+    slim: Optional[list[str]] = None
+    fieldList: Optional[list[SearchReturnFields | AnnotationFieldName]] = None
     """Which fields to return in the results"""
-    queryFields: Optional[list[SearchQueryFields | AnnotationFieldName]]
+    queryFields: Optional[list[SearchQueryFields | AnnotationFieldName]] = None
     """Which fields to search over"""
-    exact: Optional[bool]
-    groupField: Optional[bool]
+    exact: Optional[bool] = None
+    groupField: Optional[bool] = None
     """Group results by unique ID"""
-    obsoletes: Optional[bool]
+    obsoletes: Optional[bool] = None
     """Include obsoleted terms in the results"""
-    local: Optional[bool]
+    local: Optional[bool] = None
     """Only return terms in a defining ontology"""
-    childrenOf: Optional[list[str]]
+    childrenOf: Optional[list[str]] = None
     """Restrict results to children of these terms"""
-    allChildrenOf: Optional[list[str]]
+    allChildrenOf: Optional[list[str]] = None
     """
     Restrict results to children of these terms, plus other
     child-like relations e.g. "part of", "develops from"
     """
-    rows: Optional[int]
+    rows: Optional[int] = None
     """
     Number of results per page
     """
-    start: Optional[int]
+    start: Optional[int] = None
     """
     Index of first result
     """
 
-    @validator(
+    @field_validator(
         "ontology",
         "slim",
         "childrenOf",
         "allChildrenOf",
         "fieldList",
         "queryFields",
-        pre=True,
+        mode="before",
     )
+    @classmethod
     def _single_to_list(cls, v):
         """
         If a single string is passed but we expect

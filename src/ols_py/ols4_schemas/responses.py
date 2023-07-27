@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import AliasChoices, BaseModel, Field
 
 from ..schemas import responses
 from ..schemas.common import EntityType
@@ -10,20 +10,24 @@ from ..schemas.common import EntityType
 
 # Structure of search results has changed from OLS v3,
 #   some fields are now list[str] instead of str
-class SearchResultItem(BaseModel, extra=Extra.allow):
-    id: Optional[str]
-    annotations: Optional[list[str]]
-    annotations_trimmed: Optional[list[str]]
-    description: Optional[list[str]]
-    iri: Optional[str]
-    label: Optional[list[str]]
-    obo_id: Optional[list[str]]
-    ontology_name: Optional[str]
-    ontology_prefix: Optional[str]
-    subset: Optional[list[str]]
-    short_form: Optional[list[str]]
-    synonym: Optional[list[str]]
-    type: Optional[EntityType]
+class SearchResultItem(BaseModel, extra="allow"):
+    id: Optional[str] = None
+    annotations: Optional[list[str]] = None
+    annotations_trimmed: Optional[list[str]] = None
+    description: Optional[list[str]] = None
+    iri: Optional[str] = None
+    label: Optional[str] = None
+    obo_id: Optional[str] = None
+    ontology_name: Optional[str] = None
+    ontology_prefix: Optional[str] = None
+    subset: Optional[list[str]] = None
+    short_form: Optional[str] = None
+    # OLS4 has recently switched to "synonyms" for this field,
+    #   where OLS3 has "synonym"
+    synonyms: Optional[list[str]] = Field(
+        default=None, validation_alias=AliasChoices("synonyms", "synonym")
+    )
+    type: Optional[EntityType] = None
 
 
 class SearchResponseResponse(BaseModel):

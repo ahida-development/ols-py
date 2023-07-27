@@ -33,7 +33,7 @@ def test_search_returns_synonyms(ols4_client):
             "ontology": "ncbitaxon",
             "rows": 10,
             "queryFields": ["label"],
-            "fieldList": ["iri", "label", "synonym"],
+            "fieldList": ["iri", "label", "obo_id", "synonyms"],
             # Use exact, we just want to make sure we get bos taurus so
             #   we can check its synonyms
             "exact": True,
@@ -41,7 +41,7 @@ def test_search_returns_synonyms(ols4_client):
         },
     )
     first_result = resp.response.docs[0]
-    assert "cow" in first_result.synonym
+    assert "cow" in first_result.synonyms
 
 
 def test_get_term_in_defining_ontology(ols4_client):
@@ -51,7 +51,7 @@ def test_get_term_in_defining_ontology(ols4_client):
     iri = "http://purl.obolibrary.org/obo/MONDO_0018660"
     resp = ols4_client.get_term_in_defining_ontology(iri=iri)
     term = resp.embedded.terms[0]
-    assert term.iri == iri
+    assert str(term.iri) == iri
     assert term.ontology_name == "mondo"
     # OBO ID search should be working now
     obo_id = "MONDO:0018660"
@@ -64,4 +64,4 @@ def test_get_term_in_defining_ontology(ols4_client):
         params={"short_form": short_form}
     )
     assert resp_from_short_form.page.totalElements == 1
-    assert resp_from_short_form.embedded.terms[0].iri == iri
+    assert str(resp_from_short_form.embedded.terms[0].iri) == iri

@@ -94,7 +94,7 @@ class OlsClient:
         :param page: Page number of results (starting at 0)
         :param size: Number of results per page (API default is 20)
         """
-        params = schemas.requests.PageParams(page=page, size=size).dict(
+        params = schemas.requests.PageParams(page=page, size=size).model_dump(
             exclude_none=True
         )
         ontology_list = self.get_with_schema(
