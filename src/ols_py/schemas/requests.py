@@ -35,7 +35,7 @@ SearchReturnFields = Literal[
     "ontology_prefix",
     "short_form",
     "subset",
-    "synonym",
+    "synonyms",
     "type",
 ]
 SearchQueryFields = Literal[
