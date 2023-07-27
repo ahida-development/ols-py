@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 
 import pydantic
-from pydantic import BaseModel, ConfigDict, Extra, Field, HttpUrl
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from ols_py.schemas.common import EntityType
 
@@ -133,7 +133,7 @@ class TermInDefiningOntology(BaseModel):
     page: PageInfo
 
 
-class SearchResultItem(BaseModel, extra=Extra.allow):
+class SearchResultItem(BaseModel, extra="allow"):
     id: Optional[str] = None
     annotations: Optional[list[str]] = None
     annotations_trimmed: Optional[list[str]] = None

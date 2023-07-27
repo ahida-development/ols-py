@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, Field
 
 from ..schemas import responses
 from ..schemas.common import EntityType
@@ -10,7 +10,7 @@ from ..schemas.common import EntityType
 
 # Structure of search results has changed from OLS v3,
 #   some fields are now list[str] instead of str
-class SearchResultItem(BaseModel, extra=Extra.allow):
+class SearchResultItem(BaseModel, extra="allow"):
     id: Optional[str] = None
     annotations: Optional[list[str]] = None
     annotations_trimmed: Optional[list[str]] = None
