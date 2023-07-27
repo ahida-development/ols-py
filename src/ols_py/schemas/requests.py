@@ -35,6 +35,9 @@ SearchReturnFields = Literal[
     "ontology_prefix",
     "short_form",
     "subset",
+    # TODO: OLS3 uses synonym, OLS4 uses synonyms. Best option for now
+    #   is to allow both.
+    "synonym",
     "synonyms",
     "type",
 ]
