@@ -41,7 +41,7 @@ def test_search_returns_synonyms(ols4_client):
         },
     )
     first_result = resp.response.docs[0]
-    assert "cow" in first_result.synonym
+    assert "cow" in first_result.synonyms
 
 
 def test_get_term_in_defining_ontology(ols4_client):
