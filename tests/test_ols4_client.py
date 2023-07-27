@@ -51,7 +51,7 @@ def test_get_term_in_defining_ontology(ols4_client):
     iri = "http://purl.obolibrary.org/obo/MONDO_0018660"
     resp = ols4_client.get_term_in_defining_ontology(iri=iri)
     term = resp.embedded.terms[0]
-    assert term.iri == iri
+    assert str(term.iri) == iri
     assert term.ontology_name == "mondo"
     # OBO ID search should be working now
     obo_id = "MONDO:0018660"
@@ -64,4 +64,4 @@ def test_get_term_in_defining_ontology(ols4_client):
         params={"short_form": short_form}
     )
     assert resp_from_short_form.page.totalElements == 1
-    assert resp_from_short_form.embedded.terms[0].iri == iri
+    assert str(resp_from_short_form.embedded.terms[0].iri) == iri

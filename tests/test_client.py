@@ -84,7 +84,7 @@ def test_get_term(ebi_client):
         ontology_id="go", iri="http://purl.obolibrary.org/obo/GO_0043226"
     )
     assert term.ontology_name == "go"
-    assert term.iri == "http://purl.obolibrary.org/obo/GO_0043226"
+    assert str(term.iri) == "http://purl.obolibrary.org/obo/GO_0043226"
     assert term.label == "organelle"
 
 
@@ -175,11 +175,11 @@ def test_get_term_in_defining_ontology(ebi_client):
     iri = "http://purl.obolibrary.org/obo/MONDO_0018660"
     resp = ebi_client.get_term_in_defining_ontology(iri=iri)
     term = resp.embedded.terms[0]
-    assert term.iri == iri
+    assert str(term.iri) == iri
     assert term.ontology_name == "mondo"
     # Should also allow searching by OBO ID etc. by passing params
     obo_id = "MONDO:0018660"
     resp_from_obo = ebi_client.get_term_in_defining_ontology(params={"obo_id": obo_id})
     term_from_obo = resp_from_obo.embedded.terms[0]
-    assert term_from_obo.iri == iri
+    assert str(term_from_obo.iri) == iri
     assert term_from_obo.ontology_name == "mondo"
