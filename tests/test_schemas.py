@@ -56,7 +56,9 @@ def test_search_fields():
     """
     return_fields = set(get_args(ols_py.schemas.requests.SearchReturnFields))
     result_item_fields = set(
-        ols_py.schemas.responses.SearchResultItem.schema()["properties"].keys()
+        ols_py.schemas.responses.SearchResultItem.model_json_schema()[
+            "properties"
+        ].keys()
     )
     # Result items have an extra id field
     assert result_item_fields - return_fields == {"id"}
