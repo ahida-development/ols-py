@@ -33,7 +33,7 @@ def test_search_returns_synonyms(ols4_client):
             "ontology": "ncbitaxon",
             "rows": 10,
             "queryFields": ["label"],
-            "fieldList": ["iri", "label", "synonyms"],
+            "fieldList": ["iri", "label", "obo_id", "synonyms"],
             # Use exact, we just want to make sure we get bos taurus so
             #   we can check its synonyms
             "exact": True,
