@@ -62,5 +62,3 @@ def test_search_fields():
     )
     # Result items have an extra id field
     assert result_item_fields - return_fields == {"id"}
-    # TODO: currently have to allow for "synonyms" from OLS4
-    assert return_fields - result_item_fields == {"synonyms"}
