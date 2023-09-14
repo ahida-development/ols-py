@@ -27,11 +27,30 @@ class Link(BaseModel):
     href: HttpUrl
 
 
+# TODO: not sure which of these are optional
+class OboXref(BaseModel):
+    database: Optional[str] = None
+    id: Optional[str] = None
+    description: Optional[str] = None
+    url: Optional[str] = None
+
+
+class OboSynonym(BaseModel):
+    name: str
+    # TODO: can this be a fixed set, e.g. hasExactSynonym, hasRelatedSynonym?
+    scope: str
+    type: Optional[str] = None
+    xrefs: list[OboXref] = Field(default_factory=list)
+
+
 class Term(BaseModel):
     """
     Response returned by term endpoints
     """
 
+    # Haven't typed all attributes yet, so allow additional fields
+    #   for now
+    model_config = ConfigDict(extra="allow")
     iri: pydantic.AnyUrl
     label: str
     description: list[str]
@@ -39,6 +58,8 @@ class Term(BaseModel):
     #   are fixed
     annotation: dict[str, list[str]]
     synonyms: Optional[list[str]] = None
+    obo_xref: Optional[list[OboXref]] = None
+    obo_synonym: Optional[list[OboSynonym]] = None
     ontology_name: str
     ontology_prefix: str
     ontology_iri: pydantic.AnyUrl
@@ -52,7 +73,6 @@ class Term(BaseModel):
     obo_id: Optional[str] = None
     in_subset: Optional[Any] = None
     links: dict[str, Link] = Field(..., alias="_links")
-    model_config = ConfigDict(extra="allow")
 
 
 class ApiInfoLinks(BaseModel):
