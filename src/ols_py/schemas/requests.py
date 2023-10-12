@@ -135,7 +135,7 @@ class SelectParams(TypedDict):
     """
 
 
-def get_query_dict(params: SearchParams | SelectParams) -> dict[str, str | bool | int]:
+def get_query_dict(params: SearchParams | SelectParams) -> dict[str, str]:
     """
     Convert SearchParams or SelectParams to the format needed in requests,
     converting any list values to comma-separated string, as required by the search
@@ -145,6 +145,8 @@ def get_query_dict(params: SearchParams | SelectParams) -> dict[str, str | bool 
     for field_name, value in params.items():
         if isinstance(value, list):
             value = ",".join(value)
+        else:
+            value = str(value)
         query_dict[field_name] = value
     return query_dict
 

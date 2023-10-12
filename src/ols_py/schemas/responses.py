@@ -160,7 +160,7 @@ class TermInDefiningOntology(BaseModel):
     endpoint
     """
 
-    embedded: EmbeddedTerms = Field(..., alias="_embedded")
+    embedded: EmbeddedTerms | None = Field(None, alias="_embedded")
     links: TermInDefiningOntologyLinks = Field(..., alias="_links")
     page: PageInfo
 

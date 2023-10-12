@@ -272,7 +272,10 @@ class OlsClient:
         return " ".join(with_wildcards)
 
     def search(
-        self, query: str, params: SearchParams | None, add_wildcards: bool = False
+        self,
+        query: str,
+        params: SearchParams | None = None,
+        add_wildcards: bool = False,
     ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
