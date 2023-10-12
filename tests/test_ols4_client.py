@@ -113,3 +113,9 @@ def test_get_term_in_defining_ontology(ols4_client):
     )
     assert resp_from_short_form.page.totalElements == 1
     assert str(resp_from_short_form.embedded.terms[0].iri) == iri
+
+
+def test_get_ontology_terms(ols4_client):
+    resp = ols4_client.get_terms(ontology_id="efo", params={"size": 20})
+    terms = resp.embedded.terms
+    assert len(terms) == 20
