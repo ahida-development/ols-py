@@ -2,17 +2,7 @@ from typing import get_args
 
 import ols_py.schemas.requests
 import ols_py.schemas.responses
-from ols_py.schemas.requests import SearchParams
-
-
-def test_convert_list_of_strings():
-    """
-    Check a single string is automatically converted
-    to list for fields annotated as list[str]
-    """
-    params = SearchParams(q="dummy", ontology="upheno")
-    assert isinstance(params.ontology, list)
-    assert params.ontology[0] == "upheno"
+from ols_py.schemas.requests import SearchParams, get_query_dict
 
 
 def test_search_params_valid():
@@ -42,9 +32,9 @@ def test_search_params_get_query_dict():
     params = SearchParams(
         q="dummy",
         ontology=["mondo", "upheno"],
-        fieldList="iri",
+        fieldList=["iri"],
     )
-    query_dict = params.get_query_dict()
+    query_dict = get_query_dict(params)
     assert query_dict["ontology"] == "mondo,upheno"
     # Single values should be untouched
     assert query_dict["fieldList"] == "iri"
