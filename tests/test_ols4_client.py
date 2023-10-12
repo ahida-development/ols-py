@@ -221,3 +221,9 @@ def test_get_property(ols4_client):
     property_iri = "http://purl.obolibrary.org/obo/BFO_0000050"
     resp = ols4_client.get_property(ontology_id="efo", iri=property_iri)
     assert str(resp.iri) == property_iri
+
+
+def test_get_individual(ols4_client):
+    individual_iri = "http://purl.obolibrary.org/obo/IAO_0000002"
+    resp = ols4_client.get_individual(ontology_id="iao", iri=individual_iri)
+    assert str(resp.iri) == individual_iri

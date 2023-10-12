@@ -329,3 +329,16 @@ class OlsClient:
         path = f"/ontologies/{ontology_id}/properties/{quoted_iri}"
         resp = self.get_with_schema(schemas.responses.Term, path=path)
         return resp
+
+    def get_individual(self, ontology_id: str, iri: str) -> schemas.responses.Term:
+        """
+        Get an individual from a specific ontology.
+
+        Example request:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/iao/individuals/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FIAO_0000002' -i -H 'Accept: application/json'
+        """
+        quoted_iri = self._quote_iri(iri)
+        path = f"/ontologies/{ontology_id}/individuals/{quoted_iri}"
+        resp = self.get_with_schema(schemas.responses.Term, path=path)
+        return resp
