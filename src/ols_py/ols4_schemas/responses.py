@@ -4,7 +4,6 @@ from typing import Optional
 
 from pydantic import AliasChoices, BaseModel, Field
 
-from ..schemas import responses
 from ..schemas.common import EntityType
 
 
@@ -37,11 +36,3 @@ class SearchResponseResponse(BaseModel):
 class SearchResponse(BaseModel):
     responseHeader: dict
     response: SearchResponseResponse
-
-
-class TermInDefiningOntology(responses.TermInDefiningOntology):
-    """
-    Not all responses in Ols4 seem to have the _embedded property so make it optional
-    """
-
-    embedded: responses.EmbeddedTerms | None = Field(default=None, alias="_embedded")

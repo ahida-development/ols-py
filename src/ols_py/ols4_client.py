@@ -86,7 +86,7 @@ class Ols4Client(OlsClient):
         self,
         iri: Optional[str] = None,
         params: Optional[schemas.requests.TermInDefiningOntologyParams] = None,
-    ) -> ols4_schemas.responses.TermInDefiningOntology:
+    ) -> schemas.responses.TermInDefiningOntology:
         """
         Use the /terms/findByIdAndIsDefiningOntology/ to find a term in
         its defining ontology. This allows you to look up a term by IRI
@@ -105,12 +105,12 @@ class Ols4Client(OlsClient):
             iri_encoded = self._quote_iri(iri)
             path = f"/terms/findByIdAndIsDefiningOntology/{iri_encoded}"
             return self.get_with_schema(
-                ols4_schemas.responses.TermInDefiningOntology, path=path
+                schemas.responses.TermInDefiningOntology, path=path
             )
         if params:
             path = "/terms/findByIdAndIsDefiningOntology"
             return self.get_with_schema(
-                ols4_schemas.responses.TermInDefiningOntology, path=path, params=params
+                schemas.responses.TermInDefiningOntology, path=path, params=params
             )
         raise ValueError("One of iri or params arguments is required")
 
