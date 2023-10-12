@@ -109,7 +109,7 @@ class OntologyItem(BaseModel):
     status: str
     numberOfProperties: int
     numberOfTerms: int
-    languages: list[str]
+    languages: Optional[list[str]] = None
     links: OntologyItemLinks = Field(..., alias="_links")
 
     # TODO: not all fields have been documented so far, allow
