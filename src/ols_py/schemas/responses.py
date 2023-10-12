@@ -97,11 +97,23 @@ class ApiInfo(BaseModel):
     links: ApiInfoLinks = Field(..., alias="_links")
 
 
+class OntologyItemLinks(BaseModel):
+    self: Link
+    terms: Link
+    properties: Link
+    individuals: Link
+
+
 class OntologyItem(BaseModel):
     ontologyId: str
     status: str
     numberOfProperties: int
     numberOfTerms: int
+    languages: list[str]
+    links: OntologyItemLinks = Field(..., alias="_links")
+
+    # TODO: not all fields have been documented so far, allow
+    #   them through with extra="allow" for now
     model_config = ConfigDict(extra="allow")
 
 
