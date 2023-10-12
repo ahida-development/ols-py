@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TypedDict
+from typing import Literal, NotRequired, Optional, TypedDict
 
-from pydantic import BaseModel, NonNegativeInt, PositiveInt, field_validator
+from pydantic import BaseModel, NonNegativeInt, PositiveInt
 
 from .common import AnnotationFieldName, EntityType
 
@@ -51,80 +51,62 @@ SearchQueryFields = Literal[
 ]
 
 
-class SearchParams(BaseModel):
+class SearchParams(TypedDict):
     """
-    Schema for parameters accepted by the search endpoint.
-    Note you should use get_query_dict() to get a dictionary
-    you can use in the request - we want to convert any
-    lists of options to comma-separated strings, which
-    we can't do with the default dict() method
+    Optional parameters passed to search() method (not including
+    the q/query parameter).
+
+    NOTE: use get_query_dict() to convert this to the format
+    needed by the GET request
     """
 
     q: str
     """Query to search for"""
-    ontology: Optional[list[str]] = None
+    ontology: NotRequired[list[str]]
     """Ontologies to search, e.g. `["mondo", "upheno"]`"""
-    type: Optional[EntityType] = None
+    type: NotRequired[EntityType]
     """Type of term to search for, e.g. "class", "property" """
-    slim: Optional[list[str]] = None
-    fieldList: Optional[list[SearchReturnFields | AnnotationFieldName]] = None
+    slim: NotRequired[list[str]]
+    fieldList: NotRequired[list[SearchReturnFields | AnnotationFieldName]]
     """Which fields to return in the results"""
-    queryFields: Optional[list[SearchQueryFields | AnnotationFieldName]] = None
+    queryFields: NotRequired[list[SearchQueryFields | AnnotationFieldName]]
     """Which fields to search over"""
-    exact: Optional[bool] = None
-    groupField: Optional[bool] = None
+    exact: NotRequired[bool]
+    """Only return exact matches"""
+    groupField: NotRequired[bool]
     """Group results by unique ID"""
-    obsoletes: Optional[bool] = None
+    obsoletes: NotRequired[bool]
     """Include obsoleted terms in the results"""
-    local: Optional[bool] = None
+    local: NotRequired[bool]
     """Only return terms in a defining ontology"""
-    childrenOf: Optional[list[str]] = None
+    childrenOf: NotRequired[list[str]]
     """Restrict results to children of these terms"""
-    allChildrenOf: Optional[list[str]] = None
+    allChildrenOf: NotRequired[list[str]]
     """
     Restrict results to children of these terms, plus other
     child-like relations e.g. "part of", "develops from"
     """
-    rows: Optional[int] = None
+    rows: NotRequired[int]
     """
     Number of results per page
     """
-    start: Optional[int] = None
+    start: NotRequired[int]
     """
     Index of first result
     """
 
-    @field_validator(
-        "ontology",
-        "slim",
-        "childrenOf",
-        "allChildrenOf",
-        "fieldList",
-        "queryFields",
-        mode="before",
-    )
-    @classmethod
-    def _single_to_list(cls, v):
-        """
-        If a single string is passed but we expect
-        list[str], convert to a 1-item list automatically.
-        Called at the pre-validation step.
-        """
-        if isinstance(v, str):
-            return [v]
-        return v
 
-    def get_query_dict(self) -> dict[str, str | bool | int]:
-        """
-        Convert to dictionary, converting any list values to
-        comma-separated string, as required by the search endpoint
-        """
-        query_dict = {}
-        for field_name, value in self:
-            if isinstance(value, list):
-                value = ",".join(value)
-            query_dict[field_name] = value
-        return query_dict
+def get_query_dict(params: SearchParams) -> dict[str, str | bool | int]:
+    """
+    Convert SearchParams to the format needed in requests, converting any list values to
+    comma-separated string, as required by the search endpoint
+    """
+    query_dict = {}
+    for field_name, value in params.items():
+        if isinstance(value, list):
+            value = ",".join(value)
+        query_dict[field_name] = value
+    return query_dict
 
 
 RelativeTypes = Literal[
@@ -140,15 +122,23 @@ RelativeTypes = Literal[
 
 
 class TermInDefiningOntologyParams(TypedDict):
-    iri: Optional[str]
-    short_form: Optional[str]
-    obo_id: Optional[str]
-    id: Optional[str]
+    """
+    Optional arguments for get_term_in_defining_ontology() method
+    """
+
+    iri: NotRequired[str]
+    short_form: NotRequired[str]
+    obo_id: NotRequired[str]
+    id: NotRequired[str]
 
 
 class GetTermsParams(TypedDict):
-    iri: Optional[str]
-    short_form: Optional[str]
-    obo_id: Optional[str]
-    page: Optional[int]
-    size: Optional[int]
+    """
+    Optional arguments for get_terms() method
+    """
+
+    iri: NotRequired[str]
+    short_form: NotRequired[str]
+    obo_id: NotRequired[str]
+    page: NotRequired[int]
+    size: NotRequired[int]
