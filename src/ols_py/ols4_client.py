@@ -55,6 +55,33 @@ class Ols4Client(OlsClient):
         )
         return resp
 
+    def select(
+        self,
+        query: str,
+        params: Optional[schemas.requests.SelectParams] = None,
+        add_wildcards: bool = False,
+    ) -> ols4_schemas.responses.SearchResponse:
+        """
+        Search for ``query`` using the /select API endpoint, which
+        is supposed to be tuned to return good results for autocomplete.
+
+        :param query: term(s) to search for
+        :param params: dictionary of optional parameters
+        :param add_wildcards: Add a wildcard * to each word in ``query`` -
+           good for broad/flexible searches
+        :return:
+        """
+        if add_wildcards:
+            query = self._add_wildcards(query)
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
+        resp = self.get_with_schema(
+            ols4_schemas.responses.SearchResponse, "/search", params=request_params
+        )
+        return resp
+
     def get_term_in_defining_ontology(
         self,
         iri: Optional[str] = None,

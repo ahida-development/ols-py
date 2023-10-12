@@ -69,6 +69,16 @@ def test_search(ols4_client):
     assert first_result.iri
 
 
+def test_select(ols4_client):
+    """
+    Test we can get search results from the select endpoint.
+    """
+    resp = ols4_client.select(query="patella", params={"ontology": "mondo", "rows": 10})
+    assert len(resp.response.docs) > 0
+    first_result = resp.response.docs[0]
+    assert first_result.iri
+
+
 def test_search_returns_synonyms(ols4_client):
     """
     Test we can get synonyms via the fieldList parameter

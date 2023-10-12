@@ -60,8 +60,6 @@ class SearchParams(TypedDict):
     needed by the GET request
     """
 
-    q: str
-    """Query to search for"""
     ontology: NotRequired[list[str]]
     """Ontologies to search, e.g. `["mondo", "upheno"]`"""
     type: NotRequired[EntityType]
@@ -96,10 +94,52 @@ class SearchParams(TypedDict):
     """
 
 
-def get_query_dict(params: SearchParams) -> dict[str, str | bool | int]:
+class SelectParams(TypedDict):
     """
-    Convert SearchParams to the format needed in requests, converting any list values to
-    comma-separated string, as required by the search endpoint
+    Optional parameters passed to select() method (not including
+    the q/query parameter).
+
+    NOTE: use get_query_dict() to convert this to the format
+    needed by the GET request
+    """
+
+    ontology: NotRequired[list[str]]
+    """Ontologies to search, e.g. `["mondo", "upheno"]`"""
+    type: NotRequired[EntityType]
+    """Type of term to search for, e.g. "class", "property" """
+    slim: NotRequired[list[str]]
+    fieldList: NotRequired[list[SearchReturnFields | AnnotationFieldName]]
+    """Which fields to return in the results"""
+    exact: NotRequired[bool]
+    """Only return exact matches"""
+    groupField: NotRequired[bool]
+    """Group results by unique ID"""
+    obsoletes: NotRequired[bool]
+    """Include obsoleted terms in the results"""
+    local: NotRequired[bool]
+    """Only return terms in a defining ontology"""
+    childrenOf: NotRequired[list[str]]
+    """Restrict results to children of these terms"""
+    allChildrenOf: NotRequired[list[str]]
+    """
+    Restrict results to children of these terms, plus other
+    child-like relations e.g. "part of", "develops from"
+    """
+    rows: NotRequired[int]
+    """
+    Number of results per page
+    """
+    start: NotRequired[int]
+    """
+    Index of first result
+    """
+
+
+def get_query_dict(params: SearchParams | SelectParams) -> dict[str, str | bool | int]:
+    """
+    Convert SearchParams or SelectParams to the format needed in requests,
+    converting any list values to comma-separated string, as required by the search
+    and select endpoints
     """
     query_dict = {}
     for field_name, value in params.items():
