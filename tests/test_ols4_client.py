@@ -172,3 +172,19 @@ def test_get_term_relatives(relatives, ols4_client):
     assert len(resp.embedded.terms) > 0
     relative = resp.embedded.terms[0]
     assert relative.iri
+
+
+# TODO: not working in OLS4 yet?
+def test_get_related_term_by_property(ols4_client):
+    # Pancreas
+    target_term = "http://purl.obolibrary.org/obo/UBERON_0001264"
+    # Endocrine pancreas
+    source_term = "http://purl.obolibrary.org/obo/UBERON_0000016"
+    # 'part of' relation
+    property = "http://purl.obolibrary.org/obo/BFO_0000050"
+    resp = ols4_client.get_related_term_by_property(
+        "uberon", term_iri=source_term, property_iri=property
+    )
+    terms = resp.embedded.terms
+    assert len(terms) >= 1
+    assert target_term in [t.iri for t in terms]
