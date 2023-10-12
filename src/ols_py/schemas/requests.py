@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Literal, NotRequired, Optional, TypedDict
+from typing import Literal, Optional, TypedDict
 
 from pydantic import BaseModel, NonNegativeInt, PositiveInt
+from typing_extensions import NotRequired
 
 from .common import AnnotationFieldName, EntityType
 
