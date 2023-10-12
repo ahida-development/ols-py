@@ -116,6 +116,28 @@ def test_get_term_in_defining_ontology(ols4_client):
 
 
 def test_get_ontology_terms(ols4_client):
+    """
+    List terms (or classes) in OLS from a particular ontology
+
+    Example request:
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/efo/terms' -i -H 'Accept: application/json'
+    """
     resp = ols4_client.get_terms(ontology_id="efo", params={"size": 20})
     terms = resp.embedded.terms
     assert len(terms) == 20
+
+
+def test_get_single_ontology_term(ols4_client):
+    """
+    Get a single term from an ontology by IRI
+
+    Example request:
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FGO_0043226' -i -H 'Accept: application/json'
+    """
+    iri = "http://purl.obolibrary.org/obo/GO_0043226"
+    resp = ols4_client.get_terms(ontology_id="go", params={"iri": iri})
+    terms = resp.embedded.terms
+    assert len(terms) == 1
+    assert str(terms[0].iri) == iri
