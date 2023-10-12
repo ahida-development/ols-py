@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 
 import pydantic
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, HttpUrl
 
 from ols_py.schemas.common import EntityType
 
@@ -177,7 +177,11 @@ class SearchResultItem(BaseModel, extra="allow"):
     ontology_prefix: Optional[str] = None
     subset: Optional[list[str]] = None
     short_form: Optional[str] = None
-    synonym: Optional[list[str]] = None
+    # This field is actually named 'synonym' in OLS search
+    #   responses, but we remap it to synonyms
+    synonyms: Optional[list[str]] = Field(
+        default=None, validation_alias=AliasChoices("synonyms", "synonym")
+    )
     type: Optional[EntityType] = None
 
 

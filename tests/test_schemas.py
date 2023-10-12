@@ -50,5 +50,6 @@ def test_search_fields():
             "properties"
         ].keys()
     )
-    # Result items have an extra id field
-    assert result_item_fields - return_fields == {"id"}
+    # Result items have an extra id field, and we also remap 'synonym'
+    #   to synonyms
+    assert result_item_fields - return_fields == {"id", "synonyms"}

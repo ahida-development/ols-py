@@ -4,7 +4,7 @@ from typing import Any, Mapping, Optional, TypeVar
 
 import pydantic
 
-from . import ols4_schemas, schemas
+from . import schemas
 from .client import OlsClient
 from .instances import EBI_OLS4
 from .schemas.requests import get_query_dict
@@ -34,7 +34,7 @@ class Ols4Client(OlsClient):
         query: str,
         params: Optional[schemas.requests.SearchParams] = None,
         add_wildcards: bool = False,
-    ) -> ols4_schemas.responses.SearchResponse:
+    ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
@@ -51,7 +51,7 @@ class Ols4Client(OlsClient):
         else:
             request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            ols4_schemas.responses.SearchResponse, "/search", params=request_params
+            schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp
 
@@ -60,7 +60,7 @@ class Ols4Client(OlsClient):
         query: str,
         params: Optional[schemas.requests.SelectParams] = None,
         add_wildcards: bool = False,
-    ) -> ols4_schemas.responses.SearchResponse:
+    ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /select API endpoint, which
         is supposed to be tuned to return good results for autocomplete.
@@ -78,7 +78,7 @@ class Ols4Client(OlsClient):
         else:
             request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            ols4_schemas.responses.SearchResponse, "/search", params=request_params
+            schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp
 
