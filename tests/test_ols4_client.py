@@ -215,3 +215,9 @@ def test_find_terms(id_type, value, ols4_client):
     resp = ols4_client.find_terms({id_type: value})
     terms = resp.embedded.terms
     assert str(terms[0].iri) == "http://www.ebi.ac.uk/efo/EFO_0000001"
+
+
+def test_get_property(ols4_client):
+    property_iri = "http://purl.obolibrary.org/obo/BFO_0000050"
+    resp = ols4_client.get_property(ontology_id="efo", iri=property_iri)
+    assert str(resp.iri) == property_iri

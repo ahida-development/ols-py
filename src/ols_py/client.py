@@ -316,3 +316,16 @@ class OlsClient:
             schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp
+
+    def get_property(self, ontology_id: str, iri: str) -> schemas.responses.Term:
+        """
+        Get a property from a specific ontology.
+
+        Example request:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/efo/properties/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050' -i -H 'Accept: application/json'
+        """
+        quoted_iri = self._quote_iri(iri)
+        path = f"/ontologies/{ontology_id}/properties/{quoted_iri}"
+        resp = self.get_with_schema(schemas.responses.Term, path=path)
+        return resp
