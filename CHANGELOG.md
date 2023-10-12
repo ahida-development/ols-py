@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Unified OLS3 and OLS4 schemas - OLS4 is more in sync with OLS3 now, so separate schemas are no longer needed
+- Implemented more endpoints, e.g. retrieving individuals and properties
+- Reworked function arguments - any optional parameters for requests are now
+specified with `TypedDict`, rather than a PyDantic object - this is more user-friendly
+
 
 ## [0.5.1] - 2023-09-14
 ### Changed
@@ -113,4 +119,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [0.1.0]: https://github.com/ahida-development/ols-py/compare/0.0.3...0.1.0
 [0.0.3]: https://github.com/ahida-development/ols-py/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/ahida-development/ols-py/tree/0.0.2
-

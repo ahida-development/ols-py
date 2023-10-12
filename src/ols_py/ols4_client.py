@@ -19,13 +19,14 @@ class Ols4Client(OlsClient):
 
     The response structure has changed for some endpoints, so
     we need to override some methods
+
     """
 
     base_url: str
 
     def __init__(self, base_url: str = EBI_OLS4):
         """
-        :param base_url: Base API URL for the OLS instance
+        :param base_url: Base API URL for the OLS instance, up to and including /api/
         """
         super().__init__(base_url=base_url)
 
