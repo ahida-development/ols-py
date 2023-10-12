@@ -141,3 +141,22 @@ def test_get_single_ontology_term(ols4_client):
     terms = resp.embedded.terms
     assert len(terms) == 1
     assert str(terms[0].iri) == iri
+
+
+@pytest.mark.parametrize(
+    "relatives",
+    [
+        "parents",
+        "children",
+        "ancestors",
+        "descendants",
+        "hierarchical_ancestors",
+        "hierarchical_descendants",
+    ],
+)
+def test_get_term_relatives(relatives, ols4_client):
+    method = getattr(ols4_client, f"get_term_{relatives}")
+    resp = method(ontology_id="go", term_id="GO:0043226")
+    assert len(resp.embedded.terms) > 0
+    relative = resp.embedded.terms[0]
+    assert relative.iri
