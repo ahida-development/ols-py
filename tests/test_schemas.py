@@ -29,7 +29,6 @@ def test_search_params_get_query_dict():
     Test we convert option lists to comma-separated strings
     """
     params = SearchParams(
-        q="dummy",
         ontology=["mondo", "upheno"],
         fieldList=["iri"],
     )
