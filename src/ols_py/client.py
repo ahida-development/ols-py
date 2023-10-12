@@ -123,11 +123,30 @@ class OlsClient:
         self, ontology_id: str, params: Optional[schemas.requests.GetTermsParams] = None
     ) -> schemas.responses.MultipleTerms:
         """
-        Get multiple terms, possibly filtering by iri, short_form or obo_id.
+        Get multiple terms in a specific ontology, possibly filtering by iri, short_form or obo_id.
 
         Allows page and size params
         """
         path = f"/ontologies/{ontology_id}/terms"
+        return self.get_with_schema(
+            schemas.responses.MultipleTerms, path, params=params
+        )
+
+    def find_terms(self, params: schemas.requests.GetTermsParams):
+        """
+        Search for terms across ontologies.
+
+        Provide either `iri`, `short_form`, or `obo_id` in `params`
+
+        Example requests:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms/http%253A%252F%252Fwww.ebi.ac.uk%252Fefo%252FEFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?iri=http://www.ebi.ac.uk/efo/EFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?short_form=EFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?obo_id=EFO:0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?id=EFO:0000001' -i -H 'Accept: application/json'
+        """
+        path = "/terms"
         return self.get_with_schema(
             schemas.responses.MultipleTerms, path, params=params
         )

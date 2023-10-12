@@ -198,3 +198,20 @@ def test_get_related_term_by_property(ols4_client):
     terms = resp.embedded.terms
     assert len(terms) >= 1
     assert target_term in [t.iri for t in terms]
+
+
+@pytest.mark.parametrize(
+    "id_type,value",
+    [
+        ("iri", "http://www.ebi.ac.uk/efo/EFO_0000001"),
+        ("short_form", "EFO_0000001"),
+        ("obo_id", "EFO:0000001"),
+    ],
+)
+def test_find_terms(id_type, value, ols4_client):
+    """
+    Test searching form terms across ontologies
+    """
+    resp = ols4_client.find_terms({id_type: value})
+    terms = resp.embedded.terms
+    assert str(terms[0].iri) == "http://www.ebi.ac.uk/efo/EFO_0000001"
