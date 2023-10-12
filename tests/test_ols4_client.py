@@ -22,6 +22,41 @@ def test_get_ontologies(ols4_client):
     assert ontology.ontologyId
 
 
+def test_get_many_ontologies(ols4_client):
+    """
+    Try to get a lot of ontologies, to test whether they all validate against
+    our schema
+    """
+    ontologies = ols4_client.get_ontologies(size=200)
+    ontology = ontologies.embedded.ontologies[0]
+    assert len(ontologies.embedded.ontologies) == 200
+    assert ontology.ontologyId
+
+
+def test_get_single_ontology(ols4_client):
+    """
+    Test we can get the details for a single ontology
+
+    Example request:
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/efo' -i -H 'Accept: application/json'
+    """
+    ontology = ols4_client.get_ontology("efo")
+    assert ontology.ontologyId
+
+
+def test_get_api_info(ols4_client):
+    """
+    Test we can get the API entry point
+
+    Example request
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/' -i -H 'Accept: application/json'
+    """
+    resp = ols4_client.get_api_info()
+    assert resp.links.ontologies.href
+
+
 def test_search(ols4_client):
     """
     Test we can get search results from the search endpoint.
