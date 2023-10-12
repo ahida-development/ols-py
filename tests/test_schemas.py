@@ -7,22 +7,21 @@ from ols_py.schemas.requests import SearchParams, get_query_dict
 
 def test_search_params_valid():
     """
-    Test we can create a SearchParams object from valid values
+    Test we can create a SearchParams dict from valid values
     """
-    params = SearchParams(
-        q="patella",
-        ontology=["upheno", "mondo"],
-        type="individual",
+    params: SearchParams = {
+        "ontology": ["upheno", "mondo"],
+        "type": "individual",
         # Leave out slim: should be optional
-        fieldList=["iri", "obo_id", "description"],
-        queryFields=["label", "synonym"],
-        exact=False,
-        groupField=False,
-        obsoletes=False,
+        "fieldList": ["iri", "obo_id", "description"],
+        "queryFields": ["label", "synonym"],
+        "exact": False,
+        "groupField": False,
+        "obsoletes": False,
         # Leave out childrenOf, allChildrenOf
-        rows=10,
-        start=1,
-    )
+        "rows": 10,
+        "start": 1,
+    }
 
 
 def test_search_params_get_query_dict():
