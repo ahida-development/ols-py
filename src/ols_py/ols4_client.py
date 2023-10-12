@@ -86,3 +86,24 @@ class Ols4Client(OlsClient):
                 ols4_schemas.responses.TermInDefiningOntology, path=path, params=params
             )
         raise ValueError("One of iri or params arguments is required")
+
+    def get_related_term_by_property(
+        self, ontology_id: str, term_iri: str, property_iri: str
+    ):
+        """
+        Use the /ontologies/{ontology_id}/terms/{term_iri}/{property_iri} endpoint to find
+        related terms.
+
+        From the OLS4 docs:
+            In cases where a term has a direct relation to another term (single existential to a
+            named class in OBO), for example a "part of" relation, the related terms can be
+            accessed directly with this API.
+
+        Example request:
+
+        http://www.ebi.ac.uk/ols4/api/ontologies/uberon/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FUBERON_0000016/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050
+        """
+        term_iri = self._quote_iri(term_iri)
+        property_iri = self._quote_iri(property_iri)
+        path = f"/ontologies/{ontology_id}/terms/{term_iri}/{property_iri}"
+        return self.get_with_schema(schemas.responses.MultipleTerms, path=path)
