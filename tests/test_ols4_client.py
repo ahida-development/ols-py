@@ -155,6 +155,18 @@ def test_get_single_ontology_term(ols4_client):
     ],
 )
 def test_get_term_relatives(relatives, ols4_client):
+    """
+    Test the different methods for retrieving a term's ancestors/descendants
+
+    Example requests:
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/parents?id=GO:0043226' -i -H 'Accept: application/json'
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/children?id=GO:0043226' -i -H 'Accept: application/json'
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/ancestors?id=GO:0043226' -i -H 'Accept: application/json'
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/descendants?id=GO:0043226' -i -H 'Accept: application/json'
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/hierarchicalDescendants?id=GO:0043226' -i -H 'Accept: application/json'
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/go/hierarchicalAncestors?id=GO:0043226' -i -H 'Accept: application/json'
+    """
     method = getattr(ols4_client, f"get_term_{relatives}")
     resp = method(ontology_id="go", term_id="GO:0043226")
     assert len(resp.embedded.terms) > 0
