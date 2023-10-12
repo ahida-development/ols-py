@@ -9,6 +9,19 @@ def ols4_client():
     return Ols4Client(base_url=EBI_OLS4)
 
 
+def test_get_ontologies(ols4_client):
+    """
+    Test we can get a list of ontologies from OLS4
+
+    Example request:
+
+    curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies?page=1&size=1' -i
+    """
+    ontologies = ols4_client.get_ontologies(page=1, size=1)
+    ontology = ontologies.embedded.ontologies[0]
+    assert ontology.ontologyId
+
+
 def test_search(ols4_client):
     """
     Test we can get search results from the search endpoint.
