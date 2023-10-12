@@ -7,6 +7,7 @@ import pydantic
 import requests
 
 from . import schemas
+from .schemas.requests import SearchParams, get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
@@ -271,22 +272,25 @@ class OlsClient:
         return " ".join(with_wildcards)
 
     def search(
-        self, query: str, params: dict, add_wildcards: bool = False
+        self, query: str, params: SearchParams | None, add_wildcards: bool = False
     ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
         :param query: term(s) to search for
-        :param params: dictionary of search parameters
+        :param params: dictionary of search parameters, or a SearchParams object (to validate
+            and typecheck the params)
         :param add_wildcards: Add a wildcard * to each word in ``query`` -
            good for broad/flexible searches
         :return:
         """
         if add_wildcards:
             query = self._add_wildcards(query)
-        validated_params = schemas.requests.SearchParams(q=query, **params)
-        query_params = validated_params.get_query_dict()
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            schemas.responses.SearchResponse, "/search", params=query_params
+            schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp

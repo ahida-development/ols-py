@@ -7,6 +7,7 @@ import pydantic
 from . import ols4_schemas, schemas
 from .client import OlsClient
 from .instances import EBI_OLS4
+from .schemas.requests import get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
@@ -29,7 +30,10 @@ class Ols4Client(OlsClient):
         super().__init__(base_url=base_url)
 
     def search(
-        self, query: str, params: dict, add_wildcards: bool = False
+        self,
+        query: str,
+        params: Optional[schemas.requests.SearchParams] = None,
+        add_wildcards: bool = False,
     ) -> ols4_schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
@@ -42,10 +46,12 @@ class Ols4Client(OlsClient):
         """
         if add_wildcards:
             query = self._add_wildcards(query)
-        validated_params = schemas.requests.SearchParams(q=query, **params)
-        query_params = validated_params.get_query_dict()
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            ols4_schemas.responses.SearchResponse, "/search", params=query_params
+            ols4_schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp
 
