@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TypedDict
+from typing import Literal, Optional
 
 from pydantic import BaseModel, NonNegativeInt, PositiveInt
-from typing_extensions import NotRequired
+from typing_extensions import NotRequired, TypedDict
 
 from .common import AnnotationFieldName, EntityType
 
@@ -61,7 +61,7 @@ class SearchParams(TypedDict):
     needed by the GET request
     """
 
-    ontology: NotRequired[list[str]]
+    ontology: NotRequired[str | list[str]]
     """Ontologies to search, e.g. `["mondo", "upheno"]`"""
     type: NotRequired[EntityType]
     """Type of term to search for, e.g. "class", "property" """
@@ -104,7 +104,7 @@ class SelectParams(TypedDict):
     needed by the GET request
     """
 
-    ontology: NotRequired[list[str]]
+    ontology: NotRequired[str | list[str]]
     """Ontologies to search, e.g. `["mondo", "upheno"]`"""
     type: NotRequired[EntityType]
     """Type of term to search for, e.g. "class", "property" """

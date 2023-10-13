@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Mapping, Optional, TypeVar
 
 import pydantic
+from pydantic import validate_call
 
 from . import schemas
 from .client import OlsClient
@@ -30,6 +31,7 @@ class Ols4Client(OlsClient):
         """
         super().__init__(base_url=base_url)
 
+    @validate_call
     def search(
         self,
         query: str,
@@ -56,6 +58,7 @@ class Ols4Client(OlsClient):
         )
         return resp
 
+    @validate_call
     def select(
         self,
         query: str,

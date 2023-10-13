@@ -1,4 +1,5 @@
 import pytest
+from pydantic import ValidationError
 
 from ols_py.instances import EBI_OLS4
 from ols_py.ols4_client import Ols4Client
@@ -100,6 +101,15 @@ def test_search_returns_synonyms(ols4_client):
     )
     first_result = resp.response.docs[0]
     assert "cow" in first_result.synonyms
+
+
+def test_search_validate_params(ols4_client):
+    """
+    Test we get validation errors from PyDantic when providing incorrect
+    search params
+    """
+    with pytest.raises(ValidationError, match="params.type"):
+        resp = ols4_client.search(query="cow", params={"type": "klass"})
 
 
 def test_get_term_in_defining_ontology(ols4_client):
