@@ -76,13 +76,12 @@ profile = "black"
 src_paths = ["src", "tests"]
 
 [tool.black]
-target-version = ["py37", "py38", "py39"]
+target-version = ["py310", "py311", "py312"]
 include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 addopts = """\
-    --numprocesses auto
-    --quiet
+    --numprocesses=auto
     --cov ols_py \
     --cov-report term-missing \
     --no-cov-on-fail \

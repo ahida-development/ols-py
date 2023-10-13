@@ -3,10 +3,12 @@ from __future__ import annotations
 from typing import Any, Mapping, Optional, TypeVar
 
 import pydantic
+from pydantic import validate_call
 
-from . import ols4_schemas, schemas
+from . import schemas
 from .client import OlsClient
 from .instances import EBI_OLS4
+from .schemas.requests import get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
@@ -18,19 +20,24 @@ class Ols4Client(OlsClient):
 
     The response structure has changed for some endpoints, so
     we need to override some methods
+
     """
 
     base_url: str
 
     def __init__(self, base_url: str = EBI_OLS4):
         """
-        :param base_url: Base API URL for the OLS instance
+        :param base_url: Base API URL for the OLS instance, up to and including /api/
         """
         super().__init__(base_url=base_url)
 
+    @validate_call
     def search(
-        self, query: str, params: dict, add_wildcards: bool = False
-    ) -> ols4_schemas.responses.SearchResponse:
+        self,
+        query: str,
+        params: Optional[schemas.requests.SearchParams] = None,
+        add_wildcards: bool = False,
+    ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
@@ -42,10 +49,40 @@ class Ols4Client(OlsClient):
         """
         if add_wildcards:
             query = self._add_wildcards(query)
-        validated_params = schemas.requests.SearchParams(q=query, **params)
-        query_params = validated_params.get_query_dict()
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            ols4_schemas.responses.SearchResponse, "/search", params=query_params
+            schemas.responses.SearchResponse, "/search", params=request_params
+        )
+        return resp
+
+    @validate_call
+    def select(
+        self,
+        query: str,
+        params: Optional[schemas.requests.SelectParams] = None,
+        add_wildcards: bool = False,
+    ) -> schemas.responses.SearchResponse:
+        """
+        Search for ``query`` using the /select API endpoint, which
+        is supposed to be tuned to return good results for autocomplete.
+
+        :param query: term(s) to search for
+        :param params: dictionary of optional parameters
+        :param add_wildcards: Add a wildcard * to each word in ``query`` -
+           good for broad/flexible searches
+        :return:
+        """
+        if add_wildcards:
+            query = self._add_wildcards(query)
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
+        resp = self.get_with_schema(
+            schemas.responses.SearchResponse, "/search", params=request_params
         )
         return resp
 
@@ -53,7 +90,7 @@ class Ols4Client(OlsClient):
         self,
         iri: Optional[str] = None,
         params: Optional[schemas.requests.TermInDefiningOntologyParams] = None,
-    ) -> ols4_schemas.responses.TermInDefiningOntology:
+    ) -> schemas.responses.TermInDefiningOntology:
         """
         Use the /terms/findByIdAndIsDefiningOntology/ to find a term in
         its defining ontology. This allows you to look up a term by IRI
@@ -72,11 +109,32 @@ class Ols4Client(OlsClient):
             iri_encoded = self._quote_iri(iri)
             path = f"/terms/findByIdAndIsDefiningOntology/{iri_encoded}"
             return self.get_with_schema(
-                ols4_schemas.responses.TermInDefiningOntology, path=path
+                schemas.responses.TermInDefiningOntology, path=path
             )
         if params:
             path = "/terms/findByIdAndIsDefiningOntology"
             return self.get_with_schema(
-                ols4_schemas.responses.TermInDefiningOntology, path=path, params=params
+                schemas.responses.TermInDefiningOntology, path=path, params=params
             )
         raise ValueError("One of iri or params arguments is required")
+
+    def get_related_term_by_property(
+        self, ontology_id: str, term_iri: str, property_iri: str
+    ):
+        """
+        Use the /ontologies/{ontology_id}/terms/{term_iri}/{property_iri} endpoint to find
+        related terms.
+
+        From the OLS4 docs:
+            In cases where a term has a direct relation to another term (single existential to a
+            named class in OBO), for example a "part of" relation, the related terms can be
+            accessed directly with this API.
+
+        Example request:
+
+        http://www.ebi.ac.uk/ols4/api/ontologies/uberon/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FUBERON_0000016/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050
+        """
+        term_iri = self._quote_iri(term_iri)
+        property_iri = self._quote_iri(property_iri)
+        path = f"/ontologies/{ontology_id}/terms/{term_iri}/{property_iri}"
+        return self.get_with_schema(schemas.responses.MultipleTerms, path=path)

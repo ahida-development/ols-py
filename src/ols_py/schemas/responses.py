@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 
 import pydantic
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, HttpUrl
 
 from ols_py.schemas.common import EntityType
 
@@ -97,11 +97,23 @@ class ApiInfo(BaseModel):
     links: ApiInfoLinks = Field(..., alias="_links")
 
 
+class OntologyItemLinks(BaseModel):
+    self: Link
+    terms: Link
+    properties: Link
+    individuals: Link
+
+
 class OntologyItem(BaseModel):
     ontologyId: str
     status: str
     numberOfProperties: int
     numberOfTerms: int
+    languages: Optional[list[str]] = None
+    links: OntologyItemLinks = Field(..., alias="_links")
+
+    # TODO: not all fields have been documented so far, allow
+    #   them through with extra="allow" for now
     model_config = ConfigDict(extra="allow")
 
 
@@ -148,7 +160,7 @@ class TermInDefiningOntology(BaseModel):
     endpoint
     """
 
-    embedded: EmbeddedTerms = Field(..., alias="_embedded")
+    embedded: EmbeddedTerms | None = Field(None, alias="_embedded")
     links: TermInDefiningOntologyLinks = Field(..., alias="_links")
     page: PageInfo
 
@@ -165,7 +177,11 @@ class SearchResultItem(BaseModel, extra="allow"):
     ontology_prefix: Optional[str] = None
     subset: Optional[list[str]] = None
     short_form: Optional[str] = None
-    synonym: Optional[list[str]] = None
+    # This field is actually named 'synonym' in OLS search
+    #   responses, but we remap it to synonyms
+    synonyms: Optional[list[str]] = Field(
+        default=None, validation_alias=AliasChoices("synonyms", "synonym")
+    )
     type: Optional[EntityType] = None
 
 

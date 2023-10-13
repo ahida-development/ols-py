@@ -7,6 +7,7 @@ import pydantic
 import requests
 
 from . import schemas
+from .schemas.requests import SearchParams, get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
@@ -122,11 +123,30 @@ class OlsClient:
         self, ontology_id: str, params: Optional[schemas.requests.GetTermsParams] = None
     ) -> schemas.responses.MultipleTerms:
         """
-        Get multiple terms, possibly filtering by iri, short_form or obo_id.
+        Get multiple terms in a specific ontology, possibly filtering by iri, short_form or obo_id.
 
         Allows page and size params
         """
         path = f"/ontologies/{ontology_id}/terms"
+        return self.get_with_schema(
+            schemas.responses.MultipleTerms, path, params=params
+        )
+
+    def find_terms(self, params: schemas.requests.GetTermsParams):
+        """
+        Search for terms across ontologies.
+
+        Provide either `iri`, `short_form`, or `obo_id` in `params`
+
+        Example requests:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms/http%253A%252F%252Fwww.ebi.ac.uk%252Fefo%252FEFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?iri=http://www.ebi.ac.uk/efo/EFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?short_form=EFO_0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?obo_id=EFO:0000001' -i -H 'Accept: application/json'
+            curl -L 'http://www.ebi.ac.uk/ols4/api/terms?id=EFO:0000001' -i -H 'Accept: application/json'
+        """
+        path = "/terms"
         return self.get_with_schema(
             schemas.responses.MultipleTerms, path, params=params
         )
@@ -271,22 +291,54 @@ class OlsClient:
         return " ".join(with_wildcards)
 
     def search(
-        self, query: str, params: dict, add_wildcards: bool = False
+        self,
+        query: str,
+        params: SearchParams | None = None,
+        add_wildcards: bool = False,
     ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
         :param query: term(s) to search for
-        :param params: dictionary of search parameters
+        :param params: dictionary of search parameters, or a SearchParams object (to validate
+            and typecheck the params)
         :param add_wildcards: Add a wildcard * to each word in ``query`` -
            good for broad/flexible searches
         :return:
         """
         if add_wildcards:
             query = self._add_wildcards(query)
-        validated_params = schemas.requests.SearchParams(q=query, **params)
-        query_params = validated_params.get_query_dict()
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
         resp = self.get_with_schema(
-            schemas.responses.SearchResponse, "/search", params=query_params
+            schemas.responses.SearchResponse, "/search", params=request_params
         )
+        return resp
+
+    def get_property(self, ontology_id: str, iri: str) -> schemas.responses.Term:
+        """
+        Get a property from a specific ontology.
+
+        Example request:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/efo/properties/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050' -i -H 'Accept: application/json'
+        """
+        quoted_iri = self._quote_iri(iri)
+        path = f"/ontologies/{ontology_id}/properties/{quoted_iri}"
+        resp = self.get_with_schema(schemas.responses.Term, path=path)
+        return resp
+
+    def get_individual(self, ontology_id: str, iri: str) -> schemas.responses.Term:
+        """
+        Get an individual from a specific ontology.
+
+        Example request:
+
+            curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/iao/individuals/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FIAO_0000002' -i -H 'Accept: application/json'
+        """
+        quoted_iri = self._quote_iri(iri)
+        path = f"/ontologies/{ontology_id}/individuals/{quoted_iri}"
+        resp = self.get_with_schema(schemas.responses.Term, path=path)
         return resp
