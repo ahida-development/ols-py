@@ -28,6 +28,7 @@ markdown_extensions:
       check_paths: true
 
 plugins:
+  - social
   - search:
   - mkdocstrings:
       default_handler: python

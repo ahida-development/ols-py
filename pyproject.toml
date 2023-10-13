@@ -53,7 +53,7 @@ flake8-logging-format = "*"
 isort = "*"
 mkdocstrings = "*"
 mkdocstrings-python = "*"
-mkdocs-material = "*"
+mkdocs-material = {version="^9.4.5", extras=["imaging"]}
 mypy = "*"
 types-requests = "*"
 pep8-naming = "*"
