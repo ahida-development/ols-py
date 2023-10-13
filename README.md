@@ -24,11 +24,14 @@ Python client for the Ontology Lookup Service
 **Current status:**
 
 * In development, some endpoints and schemas are not implemented yet.
-* ⚠️ Experimental support for OLS4 instances (using the existing API) ⚠️ - `Ols4Client` has been tweaked
-  to match changes to the API/responses.
-  * This is prone to breaking as we are trying to model the exact structure of API responses
-    with Pydantic models - as changes are made to the OLS4 API during pre-release development,
+* Support for OLS4 instances (using the existing API) - for now this is implemented in a
+  separate `Ols4Client` in case of any differences between OLS3 and OLS4
+  * ⚠️ This is prone to breaking during OLS4 development as we are trying to model the
+    exact structure of API responses with Pydantic models -
+    as changes are made to the OLS4 API during pre-release development,
     responses will fail to validate.
+* In future (and particularly for a 1.0 release), we may drop support for OLS3 and
+  just focus on OLS4, as OLS3 is no longer updated.
 
 Features:
 
