@@ -117,6 +117,13 @@ class OlsClient:
         return ontology_item
 
     def get_term(self, ontology_id: str, iri: str) -> schemas.responses.Term:
+        """
+        Get a single term in a specific ontology
+
+        :param ontology_id: Ontology ID/name, e.g. "mondo"
+        :param iri: IRI for a single term
+        :return: Term details
+        """
         iri = self._quote_iri(iri)
         path = f"/ontologies/{ontology_id}/terms/{iri}"
         term = self.get_with_schema(schemas.responses.Term, path)
@@ -128,7 +135,8 @@ class OlsClient:
         """
         Get multiple terms in a specific ontology, possibly filtering by iri, short_form or obo_id.
 
-        Allows page and size params
+        :param params: Optional params. Filter by iri, short_form or obo_id, or specify the
+            number of results with ``page`` and ``size``
         """
         path = f"/ontologies/{ontology_id}/terms"
         return self.get_with_schema(
@@ -139,7 +147,9 @@ class OlsClient:
         """
         Search for terms across ontologies.
 
-        Provide either `iri`, `short_form`, or `obo_id` in `params`
+        Provide either `iri`, `short_form`, or `obo_id`
+
+        :param params: Request params. You must provide one of `iri`, `short_form` or `obo_id`
 
         Example requests:
 
@@ -202,6 +212,7 @@ class OlsClient:
     ) -> schemas.responses.MultipleTerms:
         """
         Get parents for a term.
+
         :param ontology_id: Name of ontology, e.g. "go"
         :param term_id: Term ID (URI, short form or obo ID)
         :return: response object. the actual terms are in a list at
@@ -214,6 +225,9 @@ class OlsClient:
     def get_term_hierarchical_parents(
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
+        """
+        Get hierarchical parents for a term. See :py:func:`client.OlsClient.get_term_parents`
+        """
         return self._get_term_relatives(
             "hierarchicalParents", ontology_id=ontology_id, term_id=term_id
         )
