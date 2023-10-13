@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Unified OLS3 and OLS4 schemas - OLS4 is more in sync with OLS3 now, so separate schemas are no longer needed
+- `mypy` is now happy with our types thanks to the unified schemas! We can keep the code type-checked from now on
 - Implemented more endpoints, e.g. retrieving individuals and properties
 - Reworked function arguments - any optional parameters for requests are now
 specified with `TypedDict`, rather than a PyDantic object - this is more user-friendly
