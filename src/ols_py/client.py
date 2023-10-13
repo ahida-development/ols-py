@@ -48,7 +48,10 @@ class OlsClient:
 
     def get(self, path: str, params: Optional[ParamsMapping] = None) -> dict:
         """
-        Perform a GET request to the API.
+        Perform a GET request to the API. Unlike most of
+        the client methods, this just returns the JSON data as a dict,
+        without validation/parsing. Useful if you want to test
+        an API endpoint, or use an endpoint that's not implemented yet.
 
         :param path: API path (excluding base url)
         :param params: Query parameters
