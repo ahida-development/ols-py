@@ -226,7 +226,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get hierarchical parents for a term. See :py:func:`client.OlsClient.get_term_parents`
+        Get hierarchical parents for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "hierarchicalParents", ontology_id=ontology_id, term_id=term_id
@@ -236,11 +236,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get children for a term.
-        :param ontology_id: Name of ontology, e.g. "go"
-        :param term_id: Term ID (URI, short form or obo ID)
-        :return: response object. the actual terms are in a list at
-          ``response.embedded.terms``
+        Get children for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "children", ontology_id=ontology_id, term_id=term_id
@@ -250,11 +246,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get ancestors for a term.
-        :param ontology_id: Name of ontology, e.g. "go"
-        :param term_id: Term ID (URI, short form or obo ID)
-        :return: response object. the actual terms are in a list at
-          ``response.embedded.terms``
+        Get ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "ancestors", ontology_id=ontology_id, term_id=term_id
@@ -264,11 +256,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get descendants for a term.
-        :param ontology_id: Name of ontology, e.g. "go"
-        :param term_id: Term ID (URI, short form or obo ID)
-        :return: response object. the actual terms are in a list at
-          ``response.embedded.terms``
+        Get descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "descendants", ontology_id=ontology_id, term_id=term_id
@@ -278,11 +266,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get hierarchical ancestors for a term.
-        :param ontology_id: Name of ontology, e.g. "go"
-        :param term_id: Term ID (URI, short form or obo ID)
-        :return: response object. the actual terms are in a list at
-          ``response.embedded.terms``
+        Get hierarchical ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
@@ -292,11 +276,7 @@ class OlsClient:
         self, ontology_id: str, term_id: str
     ) -> schemas.responses.MultipleTerms:
         """
-        Get hierarchical descendants for a term.
-        :param ontology_id: Name of ontology, e.g. "go"
-        :param term_id: Term ID (URI, short form or obo ID)
-        :return: response object. the actual terms are in a list at
-          ``response.embedded.terms``
+        Get hierarchical descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
             "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
