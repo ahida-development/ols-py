@@ -103,6 +103,27 @@ def test_search_returns_synonyms(ols4_client):
     assert "cow" in first_result.synonyms
 
 
+def test_search_retrieve_annotation(ols4_client):
+    """
+    Test we can include a specific annotation in fieldList
+    and have it returned in the search results
+    """
+    apoptotic_iri = "http://purl.obolibrary.org/obo/GO_0006915"
+    resp = ols4_client.search(
+        query="apoptotic process",
+        params={
+            "ontology": "go",
+            "rows": 10,
+            "queryFields": ["label"],
+            "fieldList": ["iri", "label", "has_alternative_id_annotation"],
+        },
+    )
+    docs = resp.response.docs
+    apoptopic = [d for d in docs if d.iri == apoptotic_iri][0]
+    assert hasattr(apoptopic, "has_alternative_id_annotation")
+    assert "GO:0006917" in apoptopic.has_alternative_id_annotation
+
+
 def test_search_validate_params(ols4_client):
     """
     Test we get validation errors from PyDantic when providing incorrect
