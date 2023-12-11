@@ -19,25 +19,40 @@
 
 ---
 
-Python client for the Ontology Lookup Service
+Python client for the [Ontology Lookup Service](https://www.ebi.ac.uk/ols4)
 
 **Current status:**
 
-* In development, some endpoints and schemas are not implemented yet.
-* Support for OLS4 instances (using the existing API) - for now this is implemented in a
-  separate `Ols4Client` in case of any differences between OLS3 and OLS4
-  * ⚠️ This is prone to breaking during OLS4 development as we are trying to model the
-    exact structure of API responses with Pydantic models -
-    as changes are made to the OLS4 API during pre-release development,
-    responses will fail to validate.
-* In future (and particularly for a 1.0 release), we may drop support for OLS3 and
-  just focus on OLS4, as OLS3 is no longer updated.
+* Now that OLS4 is released and OLS3 is no longer updated, this client will only
+  support OLS4 going forward
+* Some API endpoints may not be implemented, or schemas not fully described -
+  please [open an issue](https://github.com/ahida-development/ols-py/issues) if
+  you want anything added.
 
 Features:
 
 * Type annotated so you know which parameters can be used for each endpoint
 * Responses validated and parsed with [pydantic](https://github.com/pydantic/pydantic) for
   easy access to response data
+
+## Example usage
+
+```python
+from ols_py.client import Ols4Client
+client = Ols4Client()
+resp = client.search("MC1R", params={"ontology": "go"})
+term = resp.response.docs[0]
+print(term)
+# SearchResultItem(
+#   id=None, annotations=None, annotations_trimmed=None,
+#   description=['A rhodopsin-like G-protein ... gamma-melanocyte-stimulating hormone.'],
+#   iri='http://purl.obolibrary.org/obo/PR_000001146', label='melanocortin receptor',
+#   obo_id='PR:000001146', ontology_name='go', ontology_prefix='GO', subset=None,
+#   short_form='PR_000001146', synonyms=None, type='class'
+#)
+print(term.iri)
+# http://purl.obolibrary.org/obo/PR_000001146
+```
 
 ## Installation
 
