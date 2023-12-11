@@ -13,7 +13,7 @@ homepage = "https://ahida-development.github.io/ols-py"
 repository = "https://github.com/ahida-development/ols-py"
 
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
