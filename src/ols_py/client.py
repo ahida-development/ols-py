@@ -5,24 +5,26 @@ from urllib.parse import quote_plus
 
 import pydantic
 import requests
+from pydantic import validate_call
 
 from . import schemas
-from .schemas.requests import SearchParams, get_query_dict
+from .instances import EBI_OLS4
+from .schemas.requests import get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
 
 
-class OlsClient:
+class Ols4Client:
     """
     Client for communicating with an OLS instance.
     """
 
     base_url: str
 
-    def __init__(self, base_url: str):
+    def __init__(self, base_url: str = EBI_OLS4):
         """
-        :param base_url: Base API URL for the OLS instance
+        :param base_url: Base API URL for the OLS instance, up to and including /api/
         """
         if not base_url.endswith("/"):
             base_url = base_url + "/"
@@ -287,18 +289,46 @@ class OlsClient:
         with_wildcards = [f"{term}*" for term in query.split(" ")]
         return " ".join(with_wildcards)
 
+    @validate_call
     def search(
         self,
         query: str,
-        params: SearchParams | None = None,
+        params: Optional[schemas.requests.SearchParams] = None,
         add_wildcards: bool = False,
     ) -> schemas.responses.SearchResponse:
         """
         Search for ``query`` using the /search API endpoint.
 
         :param query: term(s) to search for
-        :param params: dictionary of search parameters, or a SearchParams object (to validate
-            and typecheck the params)
+        :param params: dictionary of search parameters
+        :param add_wildcards: Add a wildcard * to each word in ``query`` -
+           good for broad/flexible searches
+        :return:
+        """
+        if add_wildcards:
+            query = self._add_wildcards(query)
+        if params is None:
+            request_params = {"q": query}
+        else:
+            request_params = {"q": query, **get_query_dict(params)}
+        resp = self.get_with_schema(
+            schemas.responses.SearchResponse, "/search", params=request_params
+        )
+        return resp
+
+    @validate_call
+    def select(
+        self,
+        query: str,
+        params: Optional[schemas.requests.SelectParams] = None,
+        add_wildcards: bool = False,
+    ) -> schemas.responses.SearchResponse:
+        """
+        Search for ``query`` using the /select API endpoint, which
+        is supposed to be tuned to return good results for autocomplete.
+
+        :param query: term(s) to search for
+        :param params: dictionary of optional parameters
         :param add_wildcards: Add a wildcard * to each word in ``query`` -
            good for broad/flexible searches
         :return:
@@ -339,3 +369,24 @@ class OlsClient:
         path = f"/ontologies/{ontology_id}/individuals/{quoted_iri}"
         resp = self.get_with_schema(schemas.responses.Term, path=path)
         return resp
+
+    def get_related_term_by_property(
+        self, ontology_id: str, term_iri: str, property_iri: str
+    ):
+        """
+        Use the /ontologies/{ontology_id}/terms/{term_iri}/{property_iri} endpoint to find
+        related terms.
+
+        From the OLS4 docs:
+            In cases where a term has a direct relation to another term (single existential to a
+            named class in OBO), for example a "part of" relation, the related terms can be
+            accessed directly with this API.
+
+        Example request:
+
+        http://www.ebi.ac.uk/ols4/api/ontologies/uberon/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FUBERON_0000016/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050
+        """
+        term_iri = self._quote_iri(term_iri)
+        property_iri = self._quote_iri(property_iri)
+        path = f"/ontologies/{ontology_id}/terms/{term_iri}/{property_iri}"
+        return self.get_with_schema(schemas.responses.MultipleTerms, path=path)
