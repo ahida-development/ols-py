@@ -8,6 +8,7 @@ import requests
 from pydantic import validate_call
 
 from . import schemas
+from .instances import EBI_OLS4
 from .schemas.requests import get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
@@ -21,7 +22,7 @@ class Ols4Client:
 
     base_url: str
 
-    def __init__(self, base_url: str):
+    def __init__(self, base_url: str = EBI_OLS4):
         """
         :param base_url: Base API URL for the OLS instance, up to and including /api/
         """
