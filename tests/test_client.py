@@ -1,3 +1,4 @@
+import json
 from unittest import mock
 
 import pydantic
@@ -22,9 +23,6 @@ class DummySchema(pydantic.BaseModel):
     number: int
 
 
-# TODO: can't seem to get an actual JSON response for errors,
-#   just getting HTML
-@pytest.mark.skip
 def test_ols_error():
     """
     Perform a bad request so we can check that the
@@ -33,9 +31,10 @@ def test_ols_error():
     resp = requests.get(
         EBI_OLS4 + "/ontologies/foobar", headers={"accept": "application/json"}
     )
-    print(resp.content)
-    validation_errors = OlsErrorSchema().model_validate(resp.json())
-    assert validation_errors
+    # OLS4 currently returns binary data instead of JSON?
+    parsed_json = json.loads(resp.content.decode("utf8"))
+    error = OlsErrorSchema(**parsed_json)
+    assert error
 
 
 def test_client_base_url():

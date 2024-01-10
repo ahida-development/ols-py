@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, Optional
 
 import pydantic
@@ -202,7 +203,7 @@ class OlsErrorSchema(BaseModel):
     """
 
     error: str
-    message: str
+    message: Optional[str] = None
     path: str
     status: int
-    timestamp: int | float
+    timestamp: datetime
