@@ -162,6 +162,18 @@ def test_get_term_relatives(relatives, ols4_client):
     assert relative.iri
 
 
+def test_get_term_relatives_params(ols4_client):
+    """
+    Check we can get more than 20 terms using the params for relative term lookups
+    """
+    mp_root = "http://purl.obolibrary.org/obo/MP_0000001"
+    resp = ols4_client.get_term_children(
+        ontology_id="mp", term_id=mp_root, params={"size": 50}
+    )
+    # Should be able to get all children of the root
+    assert len(resp.embedded.terms) == resp.page.totalElements
+
+
 # TODO: not working in OLS4 yet?
 def test_get_related_term_by_property(ols4_client):
     # Pancreas

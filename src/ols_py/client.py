@@ -9,7 +9,7 @@ from pydantic import validate_call
 
 from . import schemas
 from .instances import EBI_OLS4
-from .schemas.requests import get_query_dict
+from .schemas.requests import GetTermRelativesParams, get_query_dict
 
 S = TypeVar("S", bound=pydantic.BaseModel, covariant=True)
 ParamsMapping = Mapping[str, Any]
@@ -199,93 +199,133 @@ class Ols4Client:
         raise ValueError("One of iri or params arguments is required")
 
     def _get_term_relatives(
-        self, relatives: schemas.requests.RelativeTypes, ontology_id: str, term_id: str
+        self,
+        relatives: schemas.requests.RelativeTypes,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Common method for getting a term's parents, children, ancestors etc.
         """
         path = f"/ontologies/{ontology_id}/{relatives}"
+        if params is None:
+            params = {}
         return self.get_with_schema(
-            schemas.responses.MultipleTerms, path, params={"id": term_id}
+            schemas.responses.MultipleTerms, path, params={"id": term_id, **params}
         )
 
     def get_term_parents(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get parents for a term.
 
         :param ontology_id: Name of ontology, e.g. "go"
         :param term_id: Term ID (URI, short form or obo ID)
+        :param params: optional pagination params, page and size. Default size is 20 items
         :return: response object. the actual terms are in a list at
           ``response.embedded.terms``
         """
         return self._get_term_relatives(
-            "parents", ontology_id=ontology_id, term_id=term_id
+            "parents", ontology_id=ontology_id, term_id=term_id, params=params
         )
 
     def get_term_hierarchical_parents(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get hierarchical parents for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "hierarchicalParents", ontology_id=ontology_id, term_id=term_id
+            "hierarchicalParents",
+            ontology_id=ontology_id,
+            term_id=term_id,
+            params=params,
         )
 
     def get_term_children(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get children for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "children", ontology_id=ontology_id, term_id=term_id
+            "children", ontology_id=ontology_id, term_id=term_id, params=params
         )
 
     def get_term_ancestors(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "ancestors", ontology_id=ontology_id, term_id=term_id
+            "ancestors", ontology_id=ontology_id, term_id=term_id, params=params
         )
 
     def get_term_descendants(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "descendants", ontology_id=ontology_id, term_id=term_id
+            "descendants", ontology_id=ontology_id, term_id=term_id, params=params
         )
 
     def get_term_hierarchical_ancestors(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get hierarchical ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
+            "hierarchicalAncestors",
+            ontology_id=ontology_id,
+            term_id=term_id,
+            params=params,
         )
 
     def get_term_hierarchical_descendants(
-        self, ontology_id: str, term_id: str
+        self,
+        ontology_id: str,
+        term_id: str,
+        params: Optional[GetTermRelativesParams] = None,
     ) -> schemas.responses.MultipleTerms:
         """
         Get hierarchical descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]
         """
         return self._get_term_relatives(
-            "hierarchicalAncestors", ontology_id=ontology_id, term_id=term_id
+            "hierarchicalAncestors",
+            ontology_id=ontology_id,
+            term_id=term_id,
+            params=params,
         )
 
     @staticmethod
     def _add_wildcards(query: str) -> str:
+        """
+        Add a wildcard (*) to each word/term in the query.
+        """
         with_wildcards = [f"{term}*" for term in query.split(" ")]
         return " ".join(with_wildcards)
 

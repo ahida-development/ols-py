@@ -164,6 +164,11 @@ RelativeTypes = Literal[
 ]
 
 
+class GetTermRelativesParams(TypedDict):
+    page: NotRequired[int]
+    size: NotRequired[int]
+
+
 class TermInDefiningOntologyParams(TypedDict):
     """
     Optional arguments for get_term_in_defining_ontology() method
