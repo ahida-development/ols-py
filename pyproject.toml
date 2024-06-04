@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ols-py"
-version = "1.0.0"
+version = "1.1.0"
 description = "Python client for the Ontology Lookup Service"
 authors = [
     "Marius Mather <marius.mather@sydney.edu.au>",
