@@ -1,0 +1,1783 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../schemas/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+    
+    
+      
+        <title>Client - ols-py</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Client - ols-py" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/client.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Client - ols-py" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/client.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ols4-client" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ols-py" class="md-header__button md-logo" aria-label="ols-py" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ols-py
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Client
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ahida-development/ols-py" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ols-py" class="md-nav__button md-logo" aria-label="ols-py" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    ols-py
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ahida-development/ols-py" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Client
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Client
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ols_py.client" class="md-nav__link">
+    <span class="md-ellipsis">
+      client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ols4Client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ols4Client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.find_terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get" class="md-nav__link">
+    <span class="md-ellipsis">
+      get
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_api_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_api_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_individual
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_ontologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_ontologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_ontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_ontology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_property" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_related_term_by_property" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_related_term_by_property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_ancestors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_ancestors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_children" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_children
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_descendants" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_descendants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_ancestors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_ancestors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_descendants" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_descendants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_parents" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_parents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_in_defining_ontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_in_defining_ontology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_parents" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_parents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_with_schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_with_schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.search" class="md-nav__link">
+    <span class="md-ellipsis">
+      search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.select" class="md-nav__link">
+    <span class="md-ellipsis">
+      select
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schemas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request/Response Schemas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ols_py.client" class="md-nav__link">
+    <span class="md-ellipsis">
+      client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ols4Client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ols4Client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.find_terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get" class="md-nav__link">
+    <span class="md-ellipsis">
+      get
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_api_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_api_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_individual
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_ontologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_ontologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_ontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_ontology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_property" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_related_term_by_property" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_related_term_by_property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_ancestors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_ancestors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_children" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_children
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_descendants" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_descendants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_ancestors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_ancestors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_descendants" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_descendants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_hierarchical_parents" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_hierarchical_parents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_in_defining_ontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_in_defining_ontology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_term_parents" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_term_parents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.get_with_schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_with_schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.search" class="md-nav__link">
+    <span class="md-ellipsis">
+      search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ols_py.client.Ols4Client.select" class="md-nav__link">
+    <span class="md-ellipsis">
+      select
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="ols4-client">OLS4 client</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="ols_py.client" class="doc doc-heading">
+            <code>ols_py.client</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ols_py.client.Ols4Client" class="doc doc-heading">
+              <code class="highlight language-python"><span class="n">Ols4Client</span><span class="p">(</span><span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">EBI_OLS4</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+      <p>Client for communicating with an OLS instance.</p>
+
+      
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>base_url</code></b>
+              (<code>str</code>, default:
+                  <code><span title="ols_py.instances.EBI_OLS4">EBI_OLS4</span></code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Base API URL for the OLS instance, up to and including /api/</p>
+          </div>
+        </li>
+    </ul>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.find_terms" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">find_terms</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">schemas</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">GetTermsParams</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Search for terms across ontologies.</p>
+<p>Provide either <code>iri</code>, <code>short_form</code>, or <code>obo_id</code></p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><a class="autorefs autorefs-internal" title="ols_py.schemas.requests.GetTermsParams" href="../schemas/#ols_py.schemas.requests.GetTermsParams">GetTermsParams</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>Request params. You must provide one of <code>iri</code>, <code>short_form</code> or <code>obo_id</code>  Example requests:  curl -L 'http://www.ebi.ac.uk/ols4/api/terms/http%253A%252F%252Fwww.ebi.ac.uk%252Fefo%252FEFO_0000001' -i -H 'Accept: application/json' curl -L 'http://www.ebi.ac.uk/ols4/api/terms?iri=http://www.ebi.ac.uk/efo/EFO_0000001' -i -H 'Accept: application/json' curl -L 'http://www.ebi.ac.uk/ols4/api/terms?short_form=EFO_0000001' -i -H 'Accept: application/json' curl -L 'http://www.ebi.ac.uk/ols4/api/terms?obo_id=EFO:0000001' -i -H 'Accept: application/json' curl -L 'http://www.ebi.ac.uk/ols4/api/terms?id=EFO:0000001' -i -H 'Accept: application/json'</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParamsMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Perform a GET request to the API. Unlike most of
+the client methods, this just returns the JSON data as a dict,
+without validation/parsing. Useful if you want to test
+an API endpoint, or use an endpoint that's not implemented yet.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>path</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>API path (excluding base url)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<span title="ols_py.client.ParamsMapping">ParamsMapping</span>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Query parameters</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code>dict</code>
+          –
+          <div class="doc-md-description">
+            <p>JSON data, as a dict</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code>HTTPError</code>
+            –
+          <div class="doc-md-description">
+            <p>if response is not OK</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_api_info" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_api_info</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">ApiInfo</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get the list of endpoints supported by the API</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_individual" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_individual</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">Term</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get an individual from a specific ontology.</p>
+<p>Example request:</p>
+<pre><code>curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/iao/individuals/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FIAO_0000002' -i -H 'Accept: application/json'
+</code></pre>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_ontologies" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_ontologies</span><span class="p">(</span><span class="n">page</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">OntologyList</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get the list of ontologies the OLS instance has.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>page</code></b>
+              (<code><span title="typing.Optional">Optional</span>[int]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Page number of results (starting at 0)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>size</code></b>
+              (<code><span title="typing.Optional">Optional</span>[int]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Number of results per page (API default is 20)</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_ontology" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_ontology</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">OntologyItem</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get details for a single ontology</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>ontology_id</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>Ontology ID/name, e.g. "mondo"</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_property" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_property</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">Term</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get a property from a specific ontology.</p>
+<p>Example request:</p>
+<pre><code>curl -L 'http://www.ebi.ac.uk/ols4/api/ontologies/efo/properties/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050' -i -H 'Accept: application/json'
+</code></pre>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_related_term_by_property" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_related_term_by_property</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_iri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">property_iri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Use the /ontologies/{ontology_id}/terms/{term_iri}/{property_iri} endpoint to find
+related terms.</p>
+<p>From the OLS4 docs:
+    In cases where a term has a direct relation to another term (single existential to a
+    named class in OBO), for example a "part of" relation, the related terms can be
+    accessed directly with this API.</p>
+<p>Example request:</p>
+<p>http://www.ebi.ac.uk/ols4/api/ontologies/uberon/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FUBERON_0000016/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FBFO_0000050</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">Term</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get a single term in a specific ontology</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>ontology_id</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>Ontology ID/name, e.g. "mondo"</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>iri</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>IRI for a single term</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="ols_py.schemas.responses.Term" href="../schemas/#ols_py.schemas.responses.Term">Term</a></code>
+          –
+          <div class="doc-md-description">
+            <p>Term details</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_ancestors" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_ancestors</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_children" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_children</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get children for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_descendants" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_descendants</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_hierarchical_ancestors" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_hierarchical_ancestors</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get hierarchical ancestors for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_hierarchical_descendants" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_hierarchical_descendants</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get hierarchical descendants for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_hierarchical_parents" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_hierarchical_parents</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get hierarchical parents for a term. See [get_term_parents()][ols_py.client.OlsClient.get_term_parents]</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_in_defining_ontology" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_in_defining_ontology</span><span class="p">(</span><span class="n">iri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">schemas</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">TermInDefiningOntologyParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">TermInDefiningOntology</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Use the /terms/findByIdAndIsDefiningOntology/ to find a term in
+its defining ontology. This allows you to look up a term by IRI
+alone.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>iri</code></b>
+              (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>IRI for the term. You can either provide this, or use the <code>params</code> argument (not both).</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="ols_py.schemas.requests.TermInDefiningOntologyParams" href="../schemas/#ols_py.schemas.requests.TermInDefiningOntologyParams">TermInDefiningOntologyParams</a>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>GET parameters. the /findByIdAndIsDefiningOntology/ endpoint allows "iri", "short_form", "obo_id", or "id"</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="ols_py.schemas.responses.TermInDefiningOntology" href="../schemas/#ols_py.schemas.responses.TermInDefiningOntology">TermInDefiningOntology</a></code>
+          –
+          <div class="doc-md-description">
+            <p>JSON data. Terms are at resp.embedded.terms</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code>ValueError</code>
+            –
+          <div class="doc-md-description">
+            <p>if both/neither IRI and params arguments were given.</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_term_parents" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_term_parents</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GetTermRelativesParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get parents for a term.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>ontology_id</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>Name of ontology, e.g. "go"</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>term_id</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>Term ID (URI, short form or obo ID)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<span title="ols_py.schemas.requests.GetTermRelativesParams">GetTermRelativesParams</span>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>optional pagination params, page and size. Default size is 20 items</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="ols_py.schemas.responses.MultipleTerms" href="../schemas/#ols_py.schemas.responses.MultipleTerms">MultipleTerms</a></code>
+          –
+          <div class="doc-md-description">
+            <p>response object. the actual terms are in a list at <code>response.embedded.terms</code></p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_terms" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_terms</span><span class="p">(</span><span class="n">ontology_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">schemas</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">GetTermsParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">MultipleTerms</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get multiple terms in a specific ontology, possibly filtering by iri, short_form or obo_id.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="ols_py.schemas.requests.GetTermsParams" href="../schemas/#ols_py.schemas.requests.GetTermsParams">GetTermsParams</a>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Optional params. Filter by iri, short_form or obo_id, or specify the number of results with <code>page</code> and <code>size</code></p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.get_with_schema" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_with_schema</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">S</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParamsMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">S</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Get data from <code>path</code> and parse it with <code>schema</code> to return
+a pydantic object.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>schema</code></b>
+              (<code><span title="typing.Type">Type</span>[<span title="ols_py.client.S">S</span>]</code>)
+          –
+          <div class="doc-md-description">
+            <p>Pydantic class/model inheriting from BaseModel</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>path</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>API path (excluding the base API url)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<span title="ols_py.client.ParamsMapping">ParamsMapping</span>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Query parameters</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="ols_py.client.S">S</span></code>
+          –
+          <div class="doc-md-description">
+            <p>Pydantic model instance created from <code>schema</code></p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code>pydantic.ValidationError</code>
+            –
+          <div class="doc-md-description">
+            <p>if response data fails to validate.</p>
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.search" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">schemas</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">SearchParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">SearchResponse</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Search for <code>query</code> using the /search API endpoint.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>query</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>term(s) to search for</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="ols_py.schemas.requests.SearchParams" href="../schemas/#ols_py.schemas.requests.SearchParams">SearchParams</a>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>dictionary of search parameters</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>add_wildcards</code></b>
+              (<code>bool</code>, default:
+                  <code>False</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Add a wildcard * to each word in <code>query</code> - good for broad/flexible searches</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="ols_py.schemas.responses.SearchResponse">SearchResponse</span></code>
+          –
+          <div class="doc-md-description">
+            
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ols_py.client.Ols4Client.select" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">schemas</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">SelectParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">schemas</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">SearchResponse</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Search for <code>query</code> using the /select API endpoint, which
+is supposed to be tuned to return good results for autocomplete.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code>query</code></b>
+              (<code>str</code>)
+          –
+          <div class="doc-md-description">
+            <p>term(s) to search for</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>params</code></b>
+              (<code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="ols_py.schemas.requests.SelectParams" href="../schemas/#ols_py.schemas.requests.SelectParams">SelectParams</a>]</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>dictionary of optional parameters</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code>add_wildcards</code></b>
+              (<code>bool</code>, default:
+                  <code>False</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Add a wildcard * to each word in <code>query</code> - good for broad/flexible searches</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="ols_py.schemas.responses.SearchResponse">SearchResponse</span></code>
+          –
+          <div class="doc-md-description">
+            
+          </div>
+        </li>
+    </ul>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+    
+  </body>
+</html>
