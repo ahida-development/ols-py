@@ -1,4 +1,3 @@
-import json
 from unittest import mock
 
 import pydantic
@@ -31,9 +30,8 @@ def test_ols_error():
     resp = requests.get(
         EBI_OLS4 + "/ontologies/foobar", headers={"accept": "application/json"}
     )
-    # OLS4 currently returns binary data instead of JSON?
-    parsed_json = json.loads(resp.content.decode("utf8"))
-    error = OlsErrorSchema(**parsed_json)
+    print(resp.json())
+    error = OlsErrorSchema(**resp.json())
     assert error
 
 
