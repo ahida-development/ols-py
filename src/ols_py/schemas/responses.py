@@ -202,8 +202,8 @@ class OlsErrorSchema(BaseModel):
     Error data returned the OLS API for a bad request/error
     """
 
-    error: str
+    error: Optional[str] = None
     message: Optional[str] = None
-    path: str
+    path: Optional[str] = None
     status: int
-    timestamp: datetime
+    timestamp: Optional[datetime] = None
